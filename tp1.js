@@ -26,11 +26,15 @@ class Usuario {
 }
 const usuario = new Usuario('damian', 'triebl',
                              [
-                              {nombre:'game of thrones',autor:'JRR Martin'},
-                              {nombre:'harry potter',autor:'jk rowling'}, 
-                              {nombre:'el señor de los anillos',autor:'tolkien'}
+                              {nombre:'game of thrones',autor:'JRR Martin'},                            
                             ],
-                             ['pepito el conejo', 'cachita la perra','renato el gato']);
-console.log('DTCON: contar de mascotas', usuario.countMasctotas());
-console.log('DTCON: listar nombres de libros',usuario.getBookNames())
+                             ['pepito el conejo', 'cachita la perra']);
+
+console.log('DTCON: listar nombres de libros previo',usuario.getBookNames())
+usuario.addBook(  'harry potter','jk rowling');
+usuario.addBook('el señor de los anillos','tolkien');
+console.log('DTCON: listar nombres de libros posterior',usuario.getBookNames())
+console.log('DTCON: contar de mascotas previo', usuario.countMasctotas());
+usuario.addMascotas('renato el gato')
+console.log('DTCON: contar de mascotas finales', usuario.countMasctotas());
 console.log('DTCON: nombre completo', usuario.getFullName());
