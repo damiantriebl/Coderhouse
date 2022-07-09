@@ -1,5 +1,5 @@
 # Coderhouse
-Todos los proyectos de Backend de corderHouse. estan por BRANCH!, asi que para buscarlos esta cada branch conn cada uno de los proyectos
 
-## Creados hasta ahora
-+ TP1 
+## consigna
+hacer una clase usuario que contenga nombre, apellido, libros y mascotas
+generar funciones que cuenten las mascotas, listen los libros por nombre, se agreguen libros, y mascostas
