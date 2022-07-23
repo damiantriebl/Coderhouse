@@ -1,5 +1,7 @@
 # Coderhouse
-##TP2
+##TP3
 
-Se desarrollo una clase para poder manejar archivos que contengan dentro un Json, para poder guardar datos en el archivo.
+Se uso la clase Anterior para la creacion de un servidor Express y tener 2 enpoints:
+* /productos -> GET para obtener todos los productos
+* /productosRandom -> GET para obtener un producto aleatorio
 
