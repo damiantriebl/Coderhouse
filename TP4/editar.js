@@ -15,12 +15,11 @@ router.get('/editar/:id', async (req, res) => {
         <div style="display:flex; justify-content: center; flex-direction: column;">
                      <h1>Enviar producto</h1>
                      <div>
-                        <form action="/api/productos/${id}" method="put">
+                        <form action="/api/productos/${id}" method="post">
                             <label>nombre: <input type="text" id="title" name="title" require value=${valoresAntiguos.title} /></label>
                             <label>precio: <input type="text" name="price" value=${valoresAntiguos.price}></label>
                             <input type="hidden" id="id" name="id" value="${id}" />
                             <input type="submit" value="Submit">
-                            <input type="hidden" name="_METHOD" value="PUT"/>
                         </form>
                     </div>
         </div>`)
