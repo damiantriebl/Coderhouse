@@ -1,16 +1,14 @@
 [
   {
-    "producto": "zaucony verdes agua",
-    "precio": 21,
-    "thumbnail": "http//algo...",
-    "id": 5
+    "title": "zaucony",
+    "price": "21",
+    "thumbnail": "http//zaucony.com",
+    "id": "5"
   },
   {
     "title": "zaucony grises",
-    "price": [
-      "33",
-      "http://zaukoni.com"
-    ],
+    "price": "33",
+    "thumbnail": "http//algo...",
     "id": "4"
   },
   {
@@ -21,10 +19,8 @@
   },
   {
     "title": "nikes",
-    "price": [
-      "12",
-      "http//elThumbnail.com"
-    ],
+    "price": "12",
+    "thumbnail": "http//....",
     "id": "2"
   },
   {

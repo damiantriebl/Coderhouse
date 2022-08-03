@@ -16,7 +16,7 @@ router.get('/editar/:id', async (req, res) => {
                         <form action="/api/productos/${id}" method="post">
                             <label>nombre: <input type="text" id="title" name="title" require value=${valoresAntiguos.producto} /></label>
                             <label>precio: <input type="text" name="price" value=${valoresAntiguos.precio}></label>
-                            <label>thumbnail: <input type="text" name="price" value=${valoresAntiguos.thumbnail}></label>
+                            <label>thumbnail: <input type="text" name="thumbnail" value=${valoresAntiguos.thumbnail}></label>
                             <input type="hidden" id="id" name="id" value="${id}" />
                             <input type="submit" value="Submit">
                         </form>

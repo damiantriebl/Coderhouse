@@ -95,6 +95,4 @@ router.delete('/api/productos/:id', async (req, res) => {
     }
 })
 
-router.delete('/api/productos')
-
 export {router as produtosRouter}
