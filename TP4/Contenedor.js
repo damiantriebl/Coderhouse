@@ -64,7 +64,7 @@ class Contenedor {
             return productoId;
         } else {
             console.warn("No hay producto con ese ID")
-            return productoId;
+            return null;
         }
     }
     async getAll() {

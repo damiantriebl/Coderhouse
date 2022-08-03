@@ -6,10 +6,12 @@
     "id": 5
   },
   {
-    "producto": "zaucony verdes",
-    "precio": 18,
-    "thumbnail": "http//....",
-    "id": 4
+    "title": "zaucony grises",
+    "price": [
+      "33",
+      "http://zaukoni.com"
+    ],
+    "id": "4"
   },
   {
     "producto": "adidas violetas",
@@ -18,10 +20,12 @@
     "id": 3
   },
   {
-    "producto": "nikes grises",
-    "precio": 12,
-    "thumbnail": "http//....",
-    "id": 2
+    "title": "nikes",
+    "price": [
+      "12",
+      "http//elThumbnail.com"
+    ],
+    "id": "2"
   },
   {
     "producto": "Croc azules",

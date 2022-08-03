@@ -30,6 +30,7 @@ router.post('/api/productos', async (req, res) => {
         res.json({
             ok: false,
             mensaje: 'El post no se agrego por que el objeto esta vacio',
+            error: 'No se pudo enviar el post',
             id: productoCreado
         })
     }
@@ -87,7 +88,8 @@ router.delete('/api/productos/:id', async (req, res) => {
     }else {
         res.json({
             ok: false,
-            mensaje: 'El post no se agrego por que el objeto esta vacio',
+            mensaje: 'No se ejecuto el proceso',
+            error: 'producto no encontrado',
             id: productoCreado
         })
     }
