@@ -1,13 +1,16 @@
 # Coderhouse
-<<<<<<< HEAD
-## TP3
-=======
-## TP2
->>>>>>> ca8a1c7633963233c62d59bb96c6da6186c13e85
+## TP4
 
-Se uso la clase Anterior para la creacion de un servidor Express y tener 2 enpoints:
-* /productos -> GET para obtener todos los productos
-[servidor de pruebas Glith para /productos](https://confirmed-quickest-frog.glitch.me/productos)
+Se uso la clase Anterior para la creacion de un servidor Express.
 
-* /productosRandom -> GET para obtener un producto aleatorio
-[servidor de pruebas Glith para /productosRandom](https://confirmed-quickest-frog.glitch.me/productosRandom)
+
+* / -> GET -> Con este endpoint puede crear un nuevo elemento
+* /editar/:id -> GET -> Con este endpoint editar un elemento (si se hace de esta manera solo va por POST, y no por PUT ya que los formularios estandar no soportar PUT)
+
+endpoint  API
+
+* /api/productos -> GET -> Con este endpoint puede listar elementoS
+* /api/productos/:id -> GET -> Con este endpoint puede ver un producto especifico
+* '/api/productos' -> POST -> Con este endpoint puede crear un nuevo producto, con un body con producto, thumbnail y precio (este puede ser integer o string, ya que se convierte para no tener falla)
+* '/api/productos/:id' -> PUT -> Con este endpoint puede editar un producto, con un body con producto, thumbnail y precio (este puede ser integer o string, ya que se convierte para no tener falla)
+* '/api/productos/:id' -> DELETE -> Con este endpoint puede eliminar un producto.
