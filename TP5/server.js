@@ -14,11 +14,11 @@ app.set('view engine', 'pug')
 app.use(express.static('public'))
 
 
-app.get('/crear', (req, res) => {  
+app.get('/', (req, res) => {  
   res.render('creador.pug', {
     titulo: "Subir productos Adidas",
     hayLista: true,
-    mensaje: "pugerto desde creador"})
+    nav:"creador"})
 })
 
 app.post('/creador', async (req, res) => {
@@ -30,13 +30,14 @@ app.post('/creador', async (req, res) => {
     })
  })
 
-app.get('/', async (req, res) => {
+app.get('/productos', async (req, res) => {
     const producto = await productos.getAll();
     const hayLista = producto.length > 0;
     res.render('index', {
         titulo: "Adidas 2022", 
         listaProductos: producto,
-        hayLista
+        hayLista,
+        nav:"productos"
       })
 })
  
