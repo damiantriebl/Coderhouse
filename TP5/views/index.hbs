@@ -10,18 +10,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
-                <div class="col d-flex justify-content-center">
-                    <h1>Adidas 2022</h1>
-                </div>
-        </div>        
+              {{> title }}
      
 
          {{#if listExist}}
             <div class="d-flex p-2 bd-highlight flex-wrap">
                 {{#each list}}
                    <div class="card " style="width: 18rem; margin: 1rem;">
-                        <img src="/{{thumbnail}}.webp" class="card-img-top" alt="{{thumbnail}}">
+                        <img src="{{thumbnail}}" class="card-img-top" alt="{{thumbnail}}">
                         <div class="card-body">
                             <h5 class="card-title">{{producto}}</h5>
                             <p class="card-text">$ {{precio}}</p>

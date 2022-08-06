@@ -28,19 +28,16 @@ app.set('views', './views')
 app.use(express.static('public'))
 
 
-const fakeApi = () => [
-    {name: 'Fede', lane: 'midlaner'},
-    {name: 'Fede1', lane: 'toplaner'},
-    {name: 'Fede2', lane: 'midlaner'},
-    {name: 'Fede3', lane: 'toplaner'},
-    {name: 'Fede4', lane: 'midlaner'}
-]
+app.get('/crear', async (req, res) => {
+  res.render('creador.hbs')
+})
 
 app.get('/', async (req, res) => {
     const producto = await productos.getAll();
     console.log(producto);
     res.render('index', {listExist: true, list: producto })
 })
+ 
  
 
 
