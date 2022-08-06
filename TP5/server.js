@@ -25,11 +25,7 @@ app.post('/creador', async (req, res) => {
     const producto = await productos.save(req.body);
     const creado =  producto != -1
     console.log(producto)
-    res.render('creadoConfirmacion.pug', {    
-      title:  "Nuevo Producto" ,
-      producto: producto.producto,
-      precio: producto.precio,
-      thumbnail: producto.thumbnail,
+    res.render('creadoConfirmacion.pug', {     
       hayProducto: creado
     })
  })
