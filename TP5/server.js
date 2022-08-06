@@ -9,15 +9,16 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.set('views', './views')
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
 
 
+
+
 app.get('/', (req, res) => {  
-  res.render('creador.pug', {
+  res.render('pages/creador.ejs', {
     titulo: "Subir productos Adidas",
-    hayLista: true,
     nav:"creador"})
 })
 
@@ -25,15 +26,16 @@ app.post('/creador', async (req, res) => {
     const producto = await productos.save(req.body);
     const creado =  producto != -1
     console.log(producto)
-    res.render('creadoConfirmacion.pug', {     
-      hayProducto: creado
+    res.render('pages/creadorConfirmar.ejs', {     
+      hayProducto: creado,
+      titulo: 'Creacion de producto'
     })
  })
 
 app.get('/productos', async (req, res) => {
     const producto = await productos.getAll();
     const hayLista = producto.length > 0;
-    res.render('index', {
+    res.render('pages/productos.ejs', {
         titulo: "Adidas 2022", 
         listaProductos: producto,
         hayLista,
