@@ -1,0 +1,44 @@
+[
+  {
+    "producto": "Adidas Nemezis Firme",
+    "precio": 42222,
+    "thumbnail": "nemezisFirme",
+    "id": 7
+  },
+  {
+    "producto": "Adidas Copa Sense",
+    "precio": 18000,
+    "thumbnail": "copa",
+    "id": 6
+  },
+  {
+    "producto": "Adidas Forum low",
+    "precio": 37000,
+    "thumbnail": "forum_low",
+    "id": 5
+  },
+  {
+    "producto": "Adidas Nemezis",
+    "precio": 89000,
+    "thumbnail": "nemezis",
+    "id": 4
+  },
+  {
+    "producto": "Adidas RetroPy p9",
+    "precio": 48000,
+    "thumbnail": "retropy",
+    "id": 3
+  },
+  {
+    "producto": "Adidas Choigo",
+    "precio": 36000,
+    "thumbnail": "choigo",
+    "id": 2
+  },
+  {
+    "producto": "Adidas Stan Sminth",
+    "precio": 20000,
+    "thumbnail": "stanSmith",
+    "id": 1
+  }
+]

@@ -2,7 +2,7 @@
     "configurations": [
     {
         "name": "Launch Program",
-        "program": "${workspaceFolder}/TP4/server.js",
+        "program": "${workspaceFolder}/TP5/server.js",
         "request": "launch",
         "skipFiles": [
             "<node_internals>/**"
