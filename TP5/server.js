@@ -1,22 +1,21 @@
 import express from "express";
 import path from 'path';
-import { produtosRouter } from "./productos.js";
 import Handlebars from 'express-handlebars'
 import * as url from 'url';
-const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 import Contenedor from './Contenedor.js';
 const productos = new Contenedor('./productos.json')
 
 const app = express()
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 const port = 4000 || process.env.PORT
-// ruta: /helpers/js/test.js
-console.log(path.join(__dirname, 'views'))
+
 app.engine(
     'hbs', 
     Handlebars.engine({
-        extname: '.hbs',
-        defaultLayout: 'index.hbs',      
+        extname: '.hbs',  
+        defaultLayout: 'main.hbs' ,          
         layoutsDir: path.join(__dirname, 'views'),
         partialsDir: path.join( __dirname, 'views', 'partials')
     })
@@ -28,17 +27,33 @@ app.set('views', './views')
 app.use(express.static('public'))
 
 
-app.get('/crear', async (req, res) => {
-  res.render('creador.hbs')
+app.get('/', async (req, res) => {
+  res.render('layout/crear.hbs',{
+    titulo: "Adidas 2022",
+    producto: false
+  })
 })
 
-app.get('/', async (req, res) => {
+
+app.get('/productos', async (req, res) => {
     const producto = await productos.getAll();
-    console.log(producto);
-    res.render('index', {listExist: true, list: producto })
+    const listExist = producto.length > 0;
+    res.render('layout/index.hbs', {
+        titulo: "Adidas 2022", 
+        list: producto,
+        listExist,
+        producto: true 
+      })
 })
- 
- 
+app.post('/creador', async (req, res) => {
+    const producto = await productos.save(req.body);
+    const creado =  producto != -1
+    console.log(producto)
+    res.render('layout/creadorConfirmar.hbs', {     
+      hayProducto: creado,
+      titulo: 'Creacion de producto'
+    })
+ })
 
 
 
