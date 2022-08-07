@@ -1,16 +1,10 @@
 # Coderhouse
-## TP4
+## TP5
 
-Se uso la clase Anterior para la creacion de un servidor Express.
+Se Desarrollo mediante 3 plantillas la vista de los elementos y la carga de un producto, con handlebars, pug y ejs
 
-
-* / -> GET -> Con este endpoint puede crear un nuevo elemento
-* /editar/:id -> GET -> Con este endpoint editar un elemento (si se hace de esta manera solo va por POST, y no por PUT ya que los formularios estandar no soportar PUT)
-
+las distintas plantillas se armaron en distintas branch, tp5_ejs ,tp5_handlebars y tp5_pug
 endpoint  API
 
-* /api/productos -> GET -> Con este endpoint puede listar elementoS
-* /api/productos/:id -> GET -> Con este endpoint puede ver un producto especifico
-* '/api/productos' -> POST -> Con este endpoint puede crear un nuevo producto, con un body con producto, thumbnail y precio (este puede ser integer o string, ya que se convierte para no tener falla)
-* '/api/productos/:id' -> PUT -> Con este endpoint puede editar un producto, con un body con producto, thumbnail y precio (este puede ser integer o string, ya que se convierte para no tener falla)
-* '/api/productos/:id' -> DELETE -> Con este endpoint puede eliminar un producto.
+* / -> GET -> Se pueden crear los productos, llama a un endpoint post para crearlo y da una confirmacion.
+* /productos -> GET -> Se pueden listar los productos
