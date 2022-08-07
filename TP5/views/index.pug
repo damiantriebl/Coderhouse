@@ -16,16 +16,20 @@ html
         include partials/title.pug
         div(class="container")
             div(class="d-flex p-2 bd-highlight flex-wrap")
-                each val in listaProductos
-                    div(class="card m-2"
-                        style="width: 18rem;"
-                        )
-                        img(src=val.thumbnail
-                            class=card-img-top
+                if hayLista
+                    each val in listaProductos
+                        div(class="card m-2"
+                            style="width: 18rem;"
                             )
-                        div(class="card-body")
-                            h5(class="card-title")=val.producto
-                            p(class="card-text")=val.precio    
+                            img(src=val.thumbnail
+                                class=card-img-top
+                                )
+                            div(class="card-body")
+                                h5(class="card-title")=val.producto
+                                p(class="card-text")=val.precio 
+                else 
+                    h2="No hay productos"
+                   
         include partials/footer.pug
                   
                 
