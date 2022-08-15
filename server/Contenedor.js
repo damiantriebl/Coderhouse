@@ -21,6 +21,7 @@ class Contenedor {
         return productosJson.length;
     }
     async save(obj) {
+        console.log('tirame el obj', obj)
         const productosJson = await this.#readFile();
         const ids = productosJson.map(obj => obj.id);
         console.log(obj)
@@ -37,7 +38,7 @@ class Contenedor {
                 }
             } catch (error) {
                 console.error('El archivo no se pudo grabar')
-            }
+            }c
         } else {
             console.warn('No hay objeto para crear')
             return -1;
