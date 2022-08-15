@@ -14,7 +14,7 @@ const Products = (props = []) => {
         }
     }, [received])
     const id = useId();
-    if( products === []){
+    if( products.length === 0){
         return <div>Cargando...</div>
     }
     return (

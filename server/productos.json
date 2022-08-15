@@ -1,4 +1,16 @@
-[ 
+[
+  {
+    "producto": "Adidas Predator",
+    "precio": "10000",
+    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/6a1405e4c7764cc8a9e2ab4900aa2e8d_9366/botines-de-futbol-predator-20.4-versatil.jpg",
+    "id": 20
+  },
+  {
+    "producto": "Adidas Copa Sense",
+    "precio": "18000",
+    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/d2219197ed56442281b6acb700930fde_9366/botines-copa-sense.1-terreno-firme.jpg",
+    "id": 19
+  },
   {
     "producto": "Adidas Ultraboos 22",
     "precio": "44400",

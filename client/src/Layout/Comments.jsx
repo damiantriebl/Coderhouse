@@ -17,7 +17,7 @@ const Comments = (props = []) => {
         }
     }, [received])
     const id = useId();
-    if(comments === []){
+    if(comments.length === 0){
         return <div>Cargando...</div>
     }
     console.log('el comments', comments)
