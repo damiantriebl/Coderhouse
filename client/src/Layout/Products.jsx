@@ -2,6 +2,7 @@ import { useId } from "react";
 import { useState, useEffect } from "react";
 import useSocket from "../hooks/useSockect";
 import Product from './Product';
+import ModalConfirm from "./modalConfirm";
 
 const Products = (props = []) => {
     const [products, setProducts] = useState([]);
@@ -19,6 +20,8 @@ const Products = (props = []) => {
     }
     return (
             <div className="p-5 flex flex-wrap justify-around	">
+                        <ModalConfirm  />
+
             {products.map((obj,index)=>{
                 return (
                     <Product key={`${id}-${index}`} producto={obj.producto} precio={obj.precio} thumbnail={obj.thumbnail} id={obj.id} />

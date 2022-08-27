@@ -15,7 +15,7 @@ const LeaveComment = () => {
   });
 
   return (
-    <section className="bg-white/25 dark:bg-gray-900 rounded-2xl">
+    <section className="bg-white/25  rounded-2xl">
       <div className="p-4 lg:py-4 px-4 mx-auto max-w-screen-md">
         <h4 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
           Contanos Tu experiencia

@@ -10,7 +10,7 @@ class Contenedor {
         try {
             productos = await fs.promises.readFile(this.archivo, 'utf-8');
         } catch (error) {
-            console.error('No se encontro el archivo')
+            console.error('No se encontro el archivo', this.archivo)
         }
         if (productos === '') productos = '[]';
         productosJson = JSON.parse(productos);
@@ -21,10 +21,8 @@ class Contenedor {
         return productosJson.length;
     }
     async save(obj) {
-        console.log('tirame el obj', obj)
         const productosJson = await this.#readFile();
         const ids = productosJson.map(obj => obj.id);
-        console.log(obj)
         let id = Math.max(...ids) + 1;
         if (Object.keys(obj).length !== 0) {
             if(obj.precio === '' && obj.producto === '') return -1
@@ -69,10 +67,20 @@ class Contenedor {
             return null;
         }
     }
+    async getByUserId(idUsuario) {
+        const productosJson = await this.#readFile();
+        const productoId = productosJson.filter(producto => parseInt(producto.idUsuario) === parseInt(idUsuario));
+        if (productoId) {
+            console.log(productoId)
+            return productoId;
+        } else {
+            console.warn("El usuario no tiene productos")
+            return null;
+        }
+    }
     async getAll() {
         const productosJson = await this.#readFile();
         if (productosJson !== []) {
-            console.log(productosJson)
             return productosJson;
         } else {
             console.warn("No hay productos")
@@ -80,8 +88,10 @@ class Contenedor {
         }
     }
     async deleteById(id) {
+        console.log('dale',id)
         const productosJson = await this.#readFile();
         const productoNuevo = productosJson.filter(producto => parseInt(producto.id) !== parseInt(id));
+        console.log('productos', productoNuevo, productosJson)
         if (productoNuevo) {
             try {
                 await fs.promises.writeFile(this.archivo, JSON.stringify([...productoNuevo], null, 2), 'utf8')
