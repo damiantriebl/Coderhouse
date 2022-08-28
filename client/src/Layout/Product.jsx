@@ -14,7 +14,7 @@ const Product = ({id, producto, precio, thumbnail }) => {
     const {doSend, errors} = useRequest({
         url: "/api/carro" ,
         method: "post",
-        body: {idProducto: id, producto, precio, thumbnail, idUsuario: 1},
+        body: {idProducto: id, producto, precio, thumbnail, idUsuario: 1, timeStamp: Date.now()},
         onSuccess: () => dispatch(addCart({idProducto: id, producto, precio, thumbnail}))
       });
       const {doSend : doDelete, errors : errorDelete} = useRequest({
