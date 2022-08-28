@@ -14,15 +14,22 @@ export const cartSlice = createSlice({
       state.openDrawnerCarro = !state.openDrawnerCarro
     },
     addCart: (state, action) => {
-        state.carrito.push(action.payload);
-    },
+      state.carrito.push(action.payload)
+  },
+    initCart: (state, action) => {
+      state.carrito = [...action.payload]
+  },
     deleteElementCart: (state, action) => {
-        state.cart.filter((producto)=>{producto !== action})
+      return {
+        ...state,
+        carrito: [...state.carrito].filter(item => item.idProducto !== action.payload.id)
+     };
+         
     }    
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCart ,deleteElementCart, toggleDrawnerCarro} = cartSlice.actions
+export const { addCart ,deleteElementCart, toggleDrawnerCarro, initCart} = cartSlice.actions
 
 export default cartSlice.reducer

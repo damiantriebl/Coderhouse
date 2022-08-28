@@ -1,37 +1,10 @@
 [
   {
-    "id": 5,
-    "producto": "Adidas Ozweego",
-    "precio": "2",
-    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/aea597b2faac4d8a95a1ad4f00ab0695_9366/ozweego-pure.jpg",
-    "idUsuario": 1
-  },
-  {
-    "id": 4,
-    "idUsuario": 1,
-    "producto": "Adidas Predator",
-    "precio": "10000",
-    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/6a1405e4c7764cc8a9e2ab4900aa2e8d_9366/botines-de-futbol-predator-20.4-versatil.jpg"
-  },
-  {
-    "id": 3,
-    "idUsuario": 1,
+    "idProducto": 7,
     "producto": "Adidas Nemezis Firme",
     "precio": 42222,
-    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/4bfda350332a40a99773ab60009bb7d1_9366/botines-nemeziz-terreno-firme.jpg"
-  },
-  {
-    "id": 2,
+    "thumbnail": "https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto,fl_lossy,c_fill,g_auto/4bfda350332a40a99773ab60009bb7d1_9366/botines-nemeziz-terreno-firme.jpg",
     "idUsuario": 1,
-    "producto": "Adidas Ultraboos 22",
-    "precio": "44400",
-    "thumbnail": "https://assets.adidas.com/images/w_303,h_303,f_auto,q_auto,fl_lossy,c_fill,g_auto/ca974051c1e8422a9cbdae2a00fd601f_9366/zapatillas-adizero-adios-pro-3.jpg"
-  },
-  {
-    "id": 1,
-    "idUsuario": 2,
-    "producto": "Adidas Ultraboos 22",
-    "precio": "44400",
-    "thumbnail": "https://assets.adidas.com/images/w_303,h_303,f_auto,q_auto,fl_lossy,c_fill,g_auto/3bb6def9ffbb4748b2a1adf900a21bb5_9366/zapatillas-ultraboost-22.jpg"
+    "id": 3
   }
 ]

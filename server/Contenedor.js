@@ -71,7 +71,7 @@ class Contenedor {
         const productosJson = await this.#readFile();
         const productoId = productosJson.filter(producto => parseInt(producto.idUsuario) === parseInt(idUsuario));
         if (productoId) {
-            console.log(productoId)
+            console.log('producto check',productoId)
             return productoId;
         } else {
             console.warn("El usuario no tiene productos")
@@ -91,6 +91,21 @@ class Contenedor {
         console.log('dale',id)
         const productosJson = await this.#readFile();
         const productoNuevo = productosJson.filter(producto => parseInt(producto.id) !== parseInt(id));
+        console.log('productos', productoNuevo, productosJson)
+        if (productoNuevo) {
+            try {
+                await fs.promises.writeFile(this.archivo, JSON.stringify([...productoNuevo], null, 2), 'utf8')
+                console.log(productoNuevo)
+            } catch (error) {
+                console.error("Fallo al grabar ", error)
+            }
+        } else {
+            console.warn("No existe ese Id para borrar")
+        }
+    }
+    async deleteByUserAndIdProducto(idProducto, idUsuario) {
+        const productosJson = await this.#readFile();
+        const productoNuevo = productosJson.filter(producto =>   +producto.idProducto !== +idProducto);
         console.log('productos', productoNuevo, productosJson)
         if (productoNuevo) {
             try {

@@ -17,9 +17,9 @@ const DrawnerCarro = () => {
        <img src={"carro"} className="w-10 mr-4" /> Carro de Compras</h5>
        {carrito.length &&
         carrito.map((obj)=>{
-          console.log(obj );
+          console.log('Carro', obj );
           return(
-            <li>aca van</li>
+            <li>{obj.producto} - {obj.precio}</li>
           )
         })
        }

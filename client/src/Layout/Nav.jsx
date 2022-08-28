@@ -4,7 +4,7 @@ import useRequest from '../hooks/useRequest';
 import DrawnerForm from "./DrawnerForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAdministrador } from "../redux/AdministradorSlice";
-import { toggleDrawnerCarro, addCart } from "../redux/carroSlice";
+import { toggleDrawnerCarro, addCart, initCart } from "../redux/carroSlice";
 import { toggleDrawner, updateBody } from "../redux/EditorSlice";
 
 import DrawnerCarro from "./DrawnerCarro";
@@ -23,7 +23,7 @@ const Nav = () => {
     url: `/api/carro/${userId}`,
     method: "get",
     body: {},
-    onSuccess: (objs) =>{ dispatch(addCart(objs))}
+    onSuccess: (objs) =>{ dispatch(initCart(objs))}
   });
   useEffect(()=>{
     doGet();
@@ -42,10 +42,7 @@ const Nav = () => {
     ;
     }
     const handleCarro = () => {
-        console.log('checkCarro', openDrawnerCarro)    
-        dispatch(toggleDrawnerCarro());   
-        console.log('checkCarro', openDrawnerCarro)    
-   
+        dispatch(toggleDrawnerCarro());      
       }
  
   return (
