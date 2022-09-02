@@ -1,23 +1,29 @@
-import express from 'express';
-import Contenedor from './Contenedor.js';
+const express = require('express');
+const HandlerDB = require("./containerDB.js")
+
+const { optionsMariaDB } = require('./options/conexionMariaDB.js')
+const { optionsSqlite3 } = require('./options/conexionSqlLite.js')
+
+const knexMariaDB = require('knex')(optionsMariaDB)
+const knexSqlite3 = require('knex')(optionsSqlite3)
+
+const objProducto = new HandlerDB(knexMariaDB,'productos')
+const objMensaje = new HandlerDB(knexSqlite3,'messages')
 
 const router = express.Router();
-const productos = new Contenedor('./productos.json')
-
-
 router.get('/api/productos', async (req, res) =>{
-    const todosProductos = await productos.getAll();
+    const todosProductos = await objProducto.getAll('productos');
     res.json(todosProductos)
 });
 
 router.get('/api/productos/:id', async (req, res)=> {
     const idReq = req.params.id
-    const produtoId = await productos.getById(+idReq);
+    const produtoId = await objProducto.getById(+idReq);
     res.json(produtoId);
 })
 
 router.post('/api/productos', async (req, res) => {
-    const productoCreado = await productos.save(req.body);
+    const productoCreado = await objProducto.save(req.body);
     if (productoCreado > 0){
         res.json({
             ok: true,
@@ -36,8 +42,7 @@ router.post('/api/productos', async (req, res) => {
 
 // se puede hacer por postman con put, pero por el formulario se puede hacer unicamente por post ya que HTML soporta solo GET y POST
 router.put('/api/productos/:id', async (req, res) => {
-    console.log('DTCON req put', req)
-    const productoCreado = await productos.saveById(req.body);
+    const productoCreado = await objProducto.updateById(req.params.id, req.body);
     if (productoCreado > 0){
         res.json({
             ok: true,
@@ -58,7 +63,7 @@ router.put('/api/productos/:id', async (req, res) => {
 // SI ENTRA A /editar/:id hay un cliente que se accede para modificar los datos
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post('/api/productos/:id', async (req, res) => {
-    const productoCreado = await productos.saveById(req.body);
+    const productoCreado = await objProducto.saveById(req.body);
     if (productoCreado > 0){
         res.json({
             ok: true,
@@ -77,11 +82,11 @@ router.post('/api/productos/:id', async (req, res) => {
 // solo se puede acceder por POSTMAN
 router.delete('/api/productos/:id', async (req, res) => {
     console.log('se borra')
-    const productoCreado = await productos.deleteById(+req.params.id);
+    const productoCreado = await objProducto.deleteById(+req.params.id);
     if (productoCreado > 0){
         res.json({
             ok: true,
-            mensaje: 'El Post se agrego correctamente',
+            mensaje: 'El Post se borro correctamente',
             id: productoCreado
         })
     }else {
@@ -94,4 +99,4 @@ router.delete('/api/productos/:id', async (req, res) => {
     }
 })
 
-export {router as produtosRouter}
+module.exports = {router }

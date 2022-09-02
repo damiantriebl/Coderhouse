@@ -1,24 +1,32 @@
-import express from "express";
-import * as url from 'url';
-import http from 'http';
-import {Server} from 'socket.io'
-import cors from 'cors'
-import Contenedor from './Contenedor.js';
-import {produtosRouter} from './productosRouter.js'
-import { carroRouter } from "./carroRouter.js";
+const express = require('express');
+const HandlerDB = require("./containerDB.js")
+const cors = require('cors')
+const { optionsMariaDB } = require('./options/conexionMariaDB.js')
+const { optionsSqlite3 } = require('./options/conexionSqlLite.js')
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-const productos = new Contenedor('./productos.json')
-const comentarios = new Contenedor('./comentarios.json')
-const app = express()   
+const knexMariaDB = require('knex')(optionsMariaDB)
+const knexSqlite3 = require('knex')(optionsSqlite3)
+const http = require('http');
+
+const objProducto = new HandlerDB(knexMariaDB,'productos')
+const objCarro = new HandlerDB(knexMariaDB,'carro')
+const objComentarios = new HandlerDB(knexSqlite3,'messages')
+const {router} = require('./productosRouter')
+const {routerCarro} = require('./carroRouter')
+const {Server: HttpServer} = require('http') 
+const {Server: IOServer} = require('socket.io');
+
+const app = express();
+const PORT = process.env.PORT || 8080
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(express.urlencoded({extended:true}))
-app.use(cors())
-app.use(produtosRouter)
-app.use(carroRouter)
+app.use(router)
+app.use(routerCarro)
 
-const server = http.createServer(app);
-const io = new Server(server, {
+const serverHttp =  http.createServer(app);
+app.use(cors())
+
+const io = new IOServer(serverHttp, {
     cors: {
         origin: "*",
         methods: ["GET", 'POST']
@@ -26,8 +34,8 @@ const io = new Server(server, {
 })
 
 io.on('connection', async (socket) =>{
-    const listaComentarios = await comentarios.getAll()
-    const listaProductos = await productos.getAll()   
+    const listaComentarios = await objComentarios.getAll()
+    const listaProductos = await objProducto.getAll()   
 
     socket.emit('comentarios', listaComentarios)
     socket.emit('productos', listaProductos )
@@ -44,4 +52,4 @@ io.on('connection', async (socket) =>{
     })
   
 })
-server.listen(4000, () => {console.log('server is running on 4000')})
+serverHttp.listen(4000, () => {console.log('server is running on 4000')})

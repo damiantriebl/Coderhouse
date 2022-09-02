@@ -1,13 +1,16 @@
-import express from 'express';
-import Contenedor from './Contenedor.js';
+const express = require('express');
+const HandlerDB = require("./containerDB.js")
 
-const router = express.Router();
-const carro = new Contenedor('./carro.json')
+const { optionsMariaDB } = require('./options/conexionMariaDB.js')
+
+const knexMariaDB = require('knex')(optionsMariaDB)
+const routerCarro = express.Router();
+const objCarro = new HandlerDB(knexMariaDB,'carro')
 
 
-router.post('/api/carro', async (req, res) => {
+routerCarro.post('/api/carro', async (req, res) => {
     console.log('paso por el carro?')
-    const productoCreado = await carro.save(req.body);
+    const productoCreado = await objCarro.save(req.body);
     if (productoCreado > 0){
         res.json({
             ok: true,
@@ -17,34 +20,34 @@ router.post('/api/carro', async (req, res) => {
     }else {
         res.json({
             ok: false,
-            mensaje: 'El post no se agrego por que el objeto esta vacio',
+            mensaje: 'El producto no se agrego al carro por que el objeto esta vacio',
             error: 'No se pudo enviar el post',
             id: productoCreado
         })
     }
 })
-router.delete('/api/carro/:id/:idUsuario', async (req, res) => {
+routerCarro.delete('/api/carro/:id/:idUsuario', async (req, res) => {
     console.log('se borro?', req.params.id,req.params.idUsuario)
-    const productoCreado = await carro.deleteByUserAndIdProducto(req.params.id, req.params.idUsuario);
+    const productoCreado = await objCarro.deleteByUserAndIdProducto(req.params.id, req.params.idUsuario);
     if (productoCreado > 0){
         res.json({
             ok: true,
-            mensaje: 'El Post se agrego correctamente',
+            mensaje: 'El producto del carro se elimino correctamente',
             id: productoCreado
         })
     }else {
         res.json({
             ok: false,
-            mensaje: 'El post no se agrego por que el objeto esta vacio',
-            error: 'No se pudo enviar el post',
+            mensaje: 'El producto del carro no se pudo borrar por que el objeto esta vacio',
+            error: 'No se puede borrar',
             id: productoCreado
         })
     }
 })
-router.get('/api/carro/:idUsuario', async (req, res) =>{   
+routerCarro.get('/api/carro/:idUsuario', async (req, res) =>{   
     console.log('levanto el carro')
-    const todosProductos = await carro.getByUserId(+req.params.idUsuario);
+    const todosProductos = await objCarro.getByUserId(+req.params.idUsuario);
     res.json(todosProductos)
 });
 
-export {router as carroRouter}
+module.exports = {routerCarro}
