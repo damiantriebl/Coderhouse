@@ -10,24 +10,33 @@ import {denormalize , normalize, schema} from 'normalizr'
 const App = () => {
   const [body, setBody] = useState();
   const [data, setData] = useState();
+  const [porcentaje, setPorcentaje] = useState();
+
   const {doSend , errors } = useRequest({
     url: `/mensaje`,
     method: "post",
     body: body,
-    onSuccess: (objs) =>{ console.log(objs)}
+    onSuccess: (objs) =>{ 
+      console.log(objs)
+      doGet()
+    }
   });
   const {doSend:doGet , errors: getErrors } = useRequest({
     url: `/mensaje`,
     method: "get",
     onSuccess: (obj) =>{
       const authorSchema = new schema.Entity('author', {}, {idAttribute: "id"});
-      const commentSchema = new schema.Entity('text');
+      const commentSchema = new schema.Entity('texto');
       const postSchema =[{
           author: authorSchema,
           text: commentSchema
       }];
-      console.log(obj)
-      setData(obj)}
+      const denormalizado = denormalize(obj.result,postSchema, obj.entities)
+      const porciento = (JSON.stringify(denormalizado).length / JSON.stringify(obj).length * 100).toFixed(2)
+      console.log('normalizado ', denormalizado)
+      setData(denormalizado)
+      setPorcentaje(porciento)
+    }
   });
 
   useEffect (()=>{
@@ -44,7 +53,7 @@ const App = () => {
         alias:  e.target[4].value,
         avatar:  e.target[5].value,
       },
-      text:   e.target[6].value,    
+      texto:   e.target[6].value,    
     }
     console.log('la data es', data)
     setBody(denormalize(data))
@@ -63,7 +72,7 @@ const App = () => {
             alias: faker.lorem.word(),
             avatar: faker.image.people() 
         },
-        text:  faker.lorem.words(10)        
+        texto:  faker.lorem.words(10)        
     }    
     return fake
   }
@@ -73,6 +82,7 @@ const App = () => {
   }
   return (
     <div className="App">
+      <h1>{porcentaje && `el factor de compresion es %${porcentaje}`}</h1>
       <h1>Centro de mensajes</h1>
       <form onSubmit={handleSubmit} className="formClass">
         <input type="email" placeholder='email' name="id" />
@@ -87,6 +97,9 @@ const App = () => {
       <div className='footer'>
         
         {console.log('la data es ', data)}
+        {data && data.map((obj)=>{
+          <Mensajes obj={obj} />
+        })}
       </div>
     </div>
   )
