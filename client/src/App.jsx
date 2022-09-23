@@ -1,21 +1,58 @@
 import { useState } from 'react'
 import Mensajes from './mensajes';
+import { faker } from '@faker-js/faker';
+import axios from 'axios'
 import './App.css'
+import useRequest from './hooks/useRequest';
 
-function App() {
-  const handleSubmit = (e) =>{
+
+
+const App = () => {
+  const [body, setBody] = useState();
+  const {doSend , errors } = useRequest({
+    url: `/mensaje`,
+    method: "post",
+    body: body,
+    onSuccess: (objs) =>{ console.log(objs)}
+  });
+  const handleSubmit = async (e) =>{
     e.preventDefault();
-    console.log(e)
-  }
-  const obj=[
-    {
-      id:"da@e.com",
-      nombre: "el mio",
-      apellido: "triebl",
-      edad: 32,
-      texto: "el texto"
+    const data = {
+      author:{
+        id: e.target[0].value,
+        nombre:  e.target[1].value,
+        apellido: e.target[2].value,
+        edad: e.target[3].value,
+        alias:  e.target[4].value,
+        avatar:  e.target[5].value,
+      },
+      text:   e.target[6].value,    
     }
-  ]  
+    console.log(data)
+    setBody(data)
+    doSend();
+  }
+
+  
+  
+  const fakerObjects = () =>{
+    const fake = {
+        author:{
+            id: faker.internet.email(),
+            nombre: faker.name.firstName(),
+            apellido: faker.name.lastName(),
+            edad: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
+            alias: faker.lorem.word(),
+            avatar: faker.image.people() 
+        },
+        text:  faker.lorem.words(10)        
+    }    
+    return fake
+  }
+  let objetos = []
+  for(let i=0; i<5; i++){
+    objetos.push(fakerObjects())
+  }
   return (
     <div className="App">
       <h1>Centro de mensajes</h1>
@@ -30,7 +67,8 @@ function App() {
         <button type='submit' >Enviar Mensjae</button>
       </form>
       <div className='footer'>
-        <Mensajes obj={{id: obj[0].id, nombre: obj[0].nombre, apellido: obj[0].apellido, edad: obj[0].edad, texto: obj[0].texto}} />
+        {objetos.map((obj)=> <Mensajes obj={obj} />)}
+       
       </div>
     </div>
   )

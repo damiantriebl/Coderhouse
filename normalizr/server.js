@@ -1,5 +1,12 @@
-import { normalize, schema, denormalize } from 'normalizr';
-import { faker } from '@faker-js/faker';
+import express from "express";
+import {faker} from '@faker-js/faker'
+import {normalize, schema } from "normalizr";
+import cors from 'cors';
+
+const app = express()
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(cors({ credentials: true }))
 
 const fakerObjects = () =>{
     const fake = {
@@ -27,4 +34,16 @@ const postSchema =[{
 }];
  
 const normalizedBlogposts = normalize(objetos,postSchema);
-console.log(normalizedBlogposts)
+app.post('/mensaje', async (req, res) => {
+   console.log(req.body);
+   const dataNormalized = normalize(req.body,postSchema);
+   res.send(dataNormalized)
+  });
+app.post('*', async (req, res) => {
+    res.send('le erraste!')
+   });
+ 
+const PORT = process.env.PORT || 4000
+app.listen(PORT, ()=>{
+    console.log(`escuchando el puerto ${PORT}`);
+})
