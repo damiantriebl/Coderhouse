@@ -21,17 +21,17 @@ const App = () => {
       doGet()
     }
   });
+  
   const {doSend:doGet , errors: getErrors } = useRequest({
     url: `/mensaje`,
     method: "get",
     onSuccess: (obj) =>{
+      console.log('tirando el obj',)
       const authorSchema = new schema.Entity('author', {}, {idAttribute: "id"});
-      const commentSchema = new schema.Entity('texto');
-      const postSchema =[{
-          author: authorSchema,
-          text: commentSchema
-      }];
-      const denormalizado = denormalize(obj.result,postSchema, obj.entities)
+    const commentSchema = new schema.Entity('texto');        
+        const responseSchema = new schema.Array({ author: authorSchema, texto:commentSchema  });
+     
+      const denormalizado = denormalize(obj.result, responseSchema ,obj.entities)
       const porciento = (JSON.stringify(denormalizado).length / JSON.stringify(obj).length * 100).toFixed(2)
       console.log('normalizado ', denormalizado)
       setData(denormalizado)
@@ -42,6 +42,7 @@ const App = () => {
   useEffect (()=>{
     doGet();
   },[]) 
+  
   const handleSubmit = async (e) =>{
     e.preventDefault();
     const data = {
@@ -54,32 +55,11 @@ const App = () => {
         avatar:  e.target[5].value,
       },
       texto:   e.target[6].value,    
-    }
-    console.log('la data es', data)
-    setBody(denormalize(data))
+    }   
+    setBody(data)
     doSend();
-  }
-
+  } 
   
-  
-  const fakerObjects = () =>{
-    const fake = {
-        author:{
-            id: faker.internet.email(),
-            nombre: faker.name.firstName(),
-            apellido: faker.name.lastName(),
-            edad: faker.date.birthdate({ min: 18, max: 65, mode: 'age' }),
-            alias: faker.lorem.word(),
-            avatar: faker.image.people() 
-        },
-        texto:  faker.lorem.words(10)        
-    }    
-    return fake
-  }
-  let objetos = []
-  for(let i=0; i<5; i++){
-    objetos.push(fakerObjects())
-  }
   return (
     <div className="App">
       <h1>{porcentaje && `el factor de compresion es %${porcentaje}`}</h1>
@@ -94,11 +74,10 @@ const App = () => {
         <input type="text" placeholder='texto' name="text" />
         <button type='submit' >Enviar Mensjae</button>
       </form>
-      <div className='footer'>
-        
+      <div className='footer'>        
         {console.log('la data es ', data)}
         {data && data.map((obj)=>{
-          <Mensajes obj={obj} />
+          return (<Mensajes obj={obj} />)
         })}
       </div>
     </div>

@@ -1,12 +1,12 @@
 import express from "express";
 import {faker} from '@faker-js/faker'
-import {normalize, schema } from "normalizr";
+import {normalize, schema  } from "normalizr";
 import cors from 'cors';
 
 const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors({ credentials: true }))
+app.use(cors())
 
 const fakerObjects = () =>{
     const fake = {
@@ -18,7 +18,7 @@ const fakerObjects = () =>{
             alias: faker.lorem.word(),
             avatar: faker.image.people() 
         },
-        text:  faker.lorem.words(10)        
+        texto:  faker.lorem.words(10)        
     }    
     return fake
 }
@@ -27,18 +27,20 @@ for(let i=0; i<5; i++){
     objetos.push(fakerObjects())
 }
 const authorSchema = new schema.Entity('author', {}, {idAttribute: "id"});
-const commentSchema = new schema.Entity('text');
-const postSchema =[{
-    author: authorSchema,
-    text: commentSchema
-}];
- 
-const normalizedBlogposts = normalize(objetos,postSchema);
+const commentSchema = new schema.Entity('texto');        
+const responseSchema = new schema.Array({ author: authorSchema, texto:commentSchema  });
+const normalizedBlogposts = normalize(objetos,responseSchema);
+console.log(normalizedBlogposts)
+
+app.get('/mensaje', async (req, res) => {  
+  res.send(normalizedBlogposts)
+ });
 app.post('/mensaje', async (req, res) => {
    console.log(req.body);
-   const dataNormalized = normalize(req.body,postSchema);
+   const dataNormalized = normalize(req.body,responseSchema);
    res.send(dataNormalized)
   });
+
 app.post('*', async (req, res) => {
     res.send('le erraste!')
    });
