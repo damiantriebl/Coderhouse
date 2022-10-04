@@ -1,6 +1,6 @@
 {
     "configurations": [
-    {
+           {
         "name": "Launch Program",
         "program": "${workspaceFolder}/server/server.js",
         "request": "launch",
