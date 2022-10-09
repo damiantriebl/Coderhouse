@@ -1,6 +1,4 @@
 import carro from '../assets/carro-logo.svg'
-import useSocket from '../hooks/useSockect';
-import useRequest from '../hooks/useRequest';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDrawner } from "../redux/EditorSlice";

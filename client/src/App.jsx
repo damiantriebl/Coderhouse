@@ -17,8 +17,8 @@ function App() {
           <Route path="carrito/:userId" element={<Cart />} />
         </Routes>
       </div>
-      <Comments home className={home && "hidden "} />
-    </div>
+      {/*<Comments home className={home && "hidden "} /> */}   
+   </div>
   );
 }
 

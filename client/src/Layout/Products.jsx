@@ -1,19 +1,18 @@
 import { useId } from "react";
 import { useState, useEffect } from "react";
-import useSocket from "../hooks/useSockect";
 import Product from './Product';
 import ModalConfirm from "./modalConfirm";
 
 const Products = (props = []) => {
     const [products, setProducts] = useState([]);
-    const {isConnected, received} = useSocket({
+/*     const {isConnected, received} = useSocket({
         listen: 'productos',
-    })
-    useEffect(() => {
+    }) */
+  /*   useEffect(() => {
         if(isConnected && received!=[]){
             setProducts(received[0])        
         }
-    }, [received])
+    }, [received]) */
     const id = useId();
     if( products.length === 0){
         return <div>Cargando...</div>

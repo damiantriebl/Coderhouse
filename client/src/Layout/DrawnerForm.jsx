@@ -1,5 +1,4 @@
 import zapa from '../assets/zapa-logo.svg'
-import useSocket from '../hooks/useSockect';
 import useRequest from '../hooks/useRequest';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,14 +13,14 @@ const DrawnerForm = () => {
     const editor = editorDrawner.edit || null;
 
     const dispatch = useDispatch()    
-    const {doRequest} = useSocket({
+  /*   const {doRequest} = useSocket({
       room: 'producto',
       body: {
         producto,
         precio,
         thumbnail
       },  
-    });
+    }); */
     const {doSend, errors} = useRequest({
       url: "/api/productos/" + id,
       method: "put",

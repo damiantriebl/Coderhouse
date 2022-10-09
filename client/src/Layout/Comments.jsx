@@ -2,13 +2,12 @@ import Comment from "./Comment";
 import LeaveComment from "./leaveComment";
 import { useId } from "react";
 import { useState, useEffect } from "react";
-import useSocket from "../hooks/useSockect";
 
 const Comments = ({home}) => {
     const [comments, setComments] = useState([]);
-    const {isConnected, received} = useSocket({
+   /*  const {isConnected, received} = useSocket({
         listen: 'comentarios',
-    })
+    }) */
     useEffect(() => {
         if(isConnected && received!=[]){
             setComments(received[0])        

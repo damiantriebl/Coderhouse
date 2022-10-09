@@ -1,18 +1,17 @@
 import { useState } from "react";
-import useSocket from "../hooks/useSockect";
 
 const LeaveComment = () => {
   const [nombre, setNombre] = useState("")
   const [titulo, setTitulo] = useState("")
   const [comentario, setComentario] = useState("")
-  const {doRequest} = useSocket({
+/*   const {doRequest} = useSocket({
     room: 'message',
     body: {
       nombre,
       titulo,
       comentario
     },  
-  });
+  }); */
 
   return (
     <section className="bg-white/25  rounded-2xl">

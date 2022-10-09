@@ -1,5 +1,4 @@
 import logo from "../assets/adidas-logo.svg";
-import useSocket from "../hooks/useSockect";
 import useRequest from '../hooks/useRequest';
 import DrawnerForm from "./DrawnerForm";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,8 +10,8 @@ import DrawnerCarro from "./DrawnerCarro";
 import { useEffect } from "react";
 
 const Nav = ({home}) => {
-  const { isConnected } = useSocket({});
-  const dispatch = useDispatch();
+/*   const { isConnected } = useSocket({});
+ */  const dispatch = useDispatch();
   const administrador = useSelector((state) => state.administrador.value);
   const userId = useSelector((state) => state.administrador.userId);
   const openDrawner = useSelector((state) => state.editor.openDrawner);

@@ -9,14 +9,31 @@ const Home = (props = []) => {
     const [login, setLogin] = useState(true);
     const [userId, setuserId] = useState(loginRedux.userId || "");
     const dispatch = useDispatch()
-    const { doSend, errors } = useRequest({
+    const { doSend : doSignUp, errors : errorsSignup } = useRequest({
+        url: "/api/signup",
+        method: "post",
+        body: { userId, pass },
+        onSuccess: (obj) => console.log('se envio correctamente', obj)
+    });
+    const { doSend: doLogin, errors: errorsLogin } = useRequest({
         url: "/api/login",
         method: "post",
         body: { userId, pass },
-        onSuccess: () => console.log('se envio correctamente')
+        onSuccess: (obj) => console.log('se envio correctamente', obj)
     });
-    const handlerSubmit = () => {
-        doSend()
+    const { doSend: doGet, errors: errorsGet } = useRequest({
+        url: "/api/user",
+        method: "get",
+        onSuccess: (obj) => console.log('se checkeo' , obj)
+    });
+    const handlerSignup = () => {
+        doSignUp()
+    }
+    const handlerLogin = () => {
+        doLogin()
+    }  
+    const handlerGet = () => {
+        doGet()
     }
     return (
         <div className='flex'>
@@ -84,22 +101,30 @@ const Home = (props = []) => {
                     </div>
                     <button
                         type="button"
-                        onClick={handlerSubmit}
+                        onClick={handlerLogin}
                         className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                         Ingresar
+
                     </button>
                     <div
                         className=" text-sm text-gray-500 my-10"
                     >
-                        O cree una cuenta
+                        O si ya tiene una cuenta
                     </div>
                     <button
                         type="button"
-                        onClick={handlerSubmit}
+                        onClick={handlerSignup}
                         className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                         Darse de alta
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handlerGet}
+                        className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        Checkear usuario
                     </button>
 
                 </form>
