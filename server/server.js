@@ -38,9 +38,14 @@ passport.use( new LocalStrategy( {
         User.findOne({userId}, async (err, usr)=>{
             if(err) throw err;
             if(!usr) done(null, false);
-            if(pass, usr.pass) {
-                done(null, usr)
-            }
+            bcrypt.compare(pass, usr.pass, (err, result)=>{
+                if(err) throw err
+                if(result) {
+                    return done(null, usr)
+                }else{
+                    return done(null, false)
+                }
+            })          
         })   
     }
 ))
@@ -72,16 +77,21 @@ app.post('/api/signup', async (req, res) => {
                 pass: hashed
             })
             await newUser.save();
+
             res.send('exito en guardar!')
         }
     })
 })
 app.post('/api/login',passport.authenticate('local'), (req, res) => {
     console.log(req.body.pass, req.body.userId)
-    res.send('autenticado con exito')
+    res.send({user: req?.user.userId, isAdmin: req?.user.isAdmin })
 })
 app.get('/api/user', (req,res) => {
     res.send(req?.user);
+})
+app.get('/api/logout', (req,res) => {
+    req.logout();
+    res.send("deslogueado");
 })
 app.listen(4000, () => {
     console.log('server corriendo')

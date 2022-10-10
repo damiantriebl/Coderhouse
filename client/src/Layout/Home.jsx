@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import useRequest from '../hooks/useRequest';
-
+import { useNavigate } from "react-router-dom";
+import {setCredentials} from '../redux/AdministradorSlice'
 
 const Home = (props = []) => {
     const loginRedux = useSelector((state) => state.administrador.userId);
+    const navigate = useNavigate();
     const [pass, setPass] = useState(loginRedux.pass || "");
     const [login, setLogin] = useState(true);
     const [userId, setuserId] = useState(loginRedux.userId || "");
@@ -13,13 +15,20 @@ const Home = (props = []) => {
         url: "/api/signup",
         method: "post",
         body: { userId, pass },
-        onSuccess: () => console.log('se envio correctamente')
+        onSuccess: () => {
+            console.log('se envio correctamente');
+            doLogin();
+        }
     });
     const { doSend: doLogin, errors: errorsLogin } = useRequest({
         url: "/api/login",
         method: "post",
         body: { userId, pass },
-        onSuccess: () => console.log('se envio correctamente')
+        onSuccess: (usr) => {
+            console.log('se envio correctamente')
+            dispatch(setCredentials(usr))
+            navigate("/productos");
+        }
     });
     const { doSend: doUser, errors: errorsUser } = useRequest({
         url: "/api/user",
@@ -118,15 +127,7 @@ const Home = (props = []) => {
                         className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                         Darse de alta
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handlerUse}
-                        className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        decime el usuario
-                    </button>
-
+                    </button>        
                 </form>
             </div>
         </div>
