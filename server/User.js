@@ -1,8 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const user = new mongoose.Schema({
-    userId: String,
-    pass: String
+    userId: {
+        type: String,
+        unique: true
+    },
+    pass: String,
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
 })
 
-module.exports = mongoose.model("User", user);
+export default mongoose.model("User", user);

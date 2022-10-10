@@ -24,9 +24,9 @@ const useRequest = ({ url, method, body, onSuccess }) => {
       }).then((res) => {
         console.log(res)
         if (onSuccess) {
-          onSuccess(response.data);
+          onSuccess(res.data);
         }
-        return response.data;
+        return res.data;
       });
     } catch (err) {
       <h1>{err}</h1>;
