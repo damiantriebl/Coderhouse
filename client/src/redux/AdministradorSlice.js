@@ -5,7 +5,6 @@ const initialState = {
   userId: "",
   pass: "",
   user: null,
-  isAdmin: null
 }
 
 export const administradorSlice = createSlice({
@@ -23,7 +22,7 @@ export const administradorSlice = createSlice({
     },
     setCredentials: (state,action) => {
       state.user = action.payload.user;
-      state.isAdmin = action.payload.isAdmin
+      state.value = action.payload.isAdmin
     },
     logOut: (state) => {
       state.user = null

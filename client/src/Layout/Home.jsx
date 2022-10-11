@@ -11,15 +11,7 @@ const Home = (props = []) => {
     const [login, setLogin] = useState(true);
     const [userId, setuserId] = useState(loginRedux.userId || "");
     const dispatch = useDispatch()
-    const { doSend : doSignUp, errors : errorsSignup } = useRequest({
-        url: "/api/signup",
-        method: "post",
-        body: { userId, pass },
-        onSuccess: () => {
-            console.log('se envio correctamente');
-            doLogin();
-        }
-    });
+
     const { doSend: doLogin, errors: errorsLogin } = useRequest({
         url: "/api/login",
         method: "post",

@@ -10,14 +10,21 @@ import DrawnerCarro from "./DrawnerCarro";
 import { useEffect } from "react";
 
 const Nav = ({home}) => {
-/*   const { isConnected } = useSocket({});
- */  const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const administrador = useSelector((state) => state.administrador.value);
   const userId = useSelector((state) => state.administrador.userId);
   const openDrawner = useSelector((state) => state.editor.openDrawner);
   const openDrawnerCarro = useSelector((state) => state.carro.openDrawnerCarro);
   const carrito = useSelector((state) => state.carro.carrito);
-
+  const {doSend : doProductos , errors : errorsProductos} = useRequest({
+    url: `/api/productos/`,
+    method: "get",
+    body: {},
+    onSuccess: (objs) =>{ dispatch(initCart(objs))}
+  });
+  useEffect(()=>{
+    doGet();
+  },[])
   const {doSend : doGet , errors : errorsGet} = useRequest({
     url: `/api/carro/${userId}`,
     method: "get",
@@ -49,7 +56,7 @@ const Nav = ({home}) => {
       {openDrawner && <DrawnerForm open={openDrawner} />}
       {openDrawnerCarro && <DrawnerCarro carro={carrito} />}
 
-      <nav className={home && "hidden" || "bg-white px-2 sm:px-4 py-2  mb-10 fixed w-full z-20 top-0 left-0 border-b border-gray-200"}>
+      <nav className={home && "hidden" && "bg-white px-2 sm:px-4 py-2  mb-10 fixed w-full z-20 top-0 left-0 border-b border-gray-200"}>
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <img src={logo} className="w-16 h-16 " alt="Adidas" />
           <h1 className="mx-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r  from-sky-600 to-blue-500">

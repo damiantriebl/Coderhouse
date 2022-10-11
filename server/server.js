@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv'
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import express from "express";
@@ -6,11 +7,14 @@ import passport from "passport";
 import passportLocal from "passport-local";
 import cookieParser from "cookie-parser";
 import session from "express-session"
-import dotenv from "dotenv";
 import User from "./User.js";
-const LocalStrategy = passportLocal.Strategy
+import { ProductosMongoRouter } from "./productosMongoRouter.js";
+import {carritoMongoRouter} from "./carritosMongoRouter.js";
+dotenv.config()
 
-mongoose.connect('mongodb+srv://damian:05550Kayak@cluster0.gr8hdky.mongodb.net/ecommerce?retryWrites=true&w=majority',{
+const LocalStrategy = passportLocal.Strategy
+const url = process.env.MONGO_URI;
+mongoose.connect(url,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, (err) => {
@@ -31,6 +35,9 @@ app.use(
 )
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(ProductosMongoRouter)
+app.use(carritoMongoRouter)
+
 passport.use( new LocalStrategy( {
     usernameField: 'userId',
     passwordField: 'pass'
