@@ -101,6 +101,17 @@ app.get('/api/logout', (req,res) => {
     req.logout();
     res.send("deslogueado");
 })
+app.get('/api/info', (req,res)=>{
+    const info = {
+        path: process.cwd(),
+        processId: process.pid,
+        nodeVersion: process.version,
+        title: process.tittle,
+        system: process.platform,
+        memory: process.memoryUsage.rss(),
+      };   
+      res.send(info);
+})
 app.listen(4000, () => {
     console.log('server corriendo')
 })
