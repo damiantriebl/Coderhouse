@@ -1,6 +1,10 @@
 # Coderhouse
-## Entrega Final
+## TP10
 
-Este proyecto esta hecho en dos capas, con una capa de frontend (client, hecho en react con vite, y estilos en tailwind) y otra de backend (server). tiene un carro (se usa un solo id de cliente, con ID: 1 , pero si se utilizara otro se podria tranquilamente
+`IMPORTANTE, ESTA PUESTO PARA QUE EL .ENV FUNCIONE EN DEBUG, SI SE USA SIN DEBUG EL .ENV SE DEBE MOVER ADENTRO DE LA CARPETA SERVER `
+
+Se armo dos nuevos endpoints, uno en 
++ '/api/info' (GET) con esto obtenemos una api con datos de el servicio
++ '/:cantidades' (GET) se accede a un fork para que haga un calculo pesado.
 
 
