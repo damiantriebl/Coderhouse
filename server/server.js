@@ -10,6 +10,7 @@ import session from "express-session"
 import User from "./User.js";
 import { ProductosMongoRouter } from "./productosMongoRouter.js";
 import {carritoMongoRouter} from "./carritosMongoRouter.js";
+import {RandomRouter} from './RandomRouter.js'
 dotenv.config()
 
 const LocalStrategy = passportLocal.Strategy
@@ -37,7 +38,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(ProductosMongoRouter)
 app.use(carritoMongoRouter)
-
+app.use(RandomRouter)
 passport.use( new LocalStrategy( {
     usernameField: 'userId',
     passwordField: 'pass'
