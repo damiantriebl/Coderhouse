@@ -112,6 +112,6 @@ app.get('/api/info', (req,res)=>{
       };   
       res.send(info);
 })
-app.listen(4000, () => {
+app.listen(8080, () => {
     console.log('server corriendo')
 })

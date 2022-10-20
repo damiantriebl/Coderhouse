@@ -5,7 +5,7 @@ import {fork} from 'child_process';
 
 router.get("/:cant", (req, res) => {
   const cantidad = parseInt(req.params.cant) || 1e6;
-  const forkeado = fork("./server/configuracion/forkeado.js");
+  const forkeado = fork("./configuracion/forkeado.js");
   forkeado.send(cantidad);
   forkeado.on("message", (msg) => {
    res.send(msg) 
