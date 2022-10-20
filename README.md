@@ -1,10 +1,14 @@
 # Coderhouse
-## TP10
+## TP11
 
-`IMPORTANTE, ESTA PUESTO PARA QUE EL .ENV FUNCIONE EN DEBUG, SI SE USA SIN DEBUG EL .ENV SE DEBE MOVER ADENTRO DE LA CARPETA SERVER `
+Para levantar el modo FORK
 
-Se armo dos nuevos endpoints, uno en 
-+ '/api/info' (GET) con esto obtenemos una api con datos de el servicio
-+ '/:cantidades' (GET) se accede a un fork para que haga un calculo pesado.
+pm2 start server.js --name="server fork" --watch -- -p 8080
+* /test/random/:cant => get 
+
+para levantar el resto en modo cluster 
+
+pm2 start server.js --name="Server Cluster" -i max  --watch -- 8080
 
 
+![image](https://user-images.githubusercontent.com/104037356/197068038-fadc50ed-3dd8-4541-af46-488dcbf9dad4.png)
