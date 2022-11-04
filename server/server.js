@@ -14,7 +14,7 @@ import {cpus} from 'os';
 import isPrime from './isPrime.js';
 import crypto from 'crypto'
 const { combine, timestamp, printf, colorize, align } = format;
-const PORT = parseInt(process.argv[2]) || 8080
+const PORT = parseInt(process.argv[2]) || 80
 const modoCluster = process.argv[3] == 'CLUSTER'
 const users = {}
 
