@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const useRequest = ({ url, method, body, onSuccess }) => {
+const useRequest = ({ url, method, body, onSuccess, headers='' }) => {
   const [errors, setErrors] = useState(null);
 
   const doSend = async (props = {}) => {
@@ -19,6 +19,7 @@ const useRequest = ({ url, method, body, onSuccess }) => {
       const response = axios({
         method,
         data: body,
+        headers,
         withCredentials: true,
         url: formatUrl,
       }).then((res) => {

@@ -10,7 +10,12 @@ const Products = (props = []) => {
         url: "/api/productos",
         method: "get",
         onSuccess: (obj) => {
-            setProducts(obj.productos);
+            if(obj.success){
+                setProducts(obj.data);
+            }else {
+                console.log('no hay productos')
+            }
+            console.log('funcionando')
         }
     });
     useEffect(() => {

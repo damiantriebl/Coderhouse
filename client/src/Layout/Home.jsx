@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { setCredentials } from '../redux/AdministradorSlice'
 import SingUp from './SingUp';
 import Login from './Login';
+import { setError } from '../redux/ErrorSlice';
 
 const Home = (props = []) => {
     const loginRedux = useSelector((state) => state.administrador.userId);
+    const error = useSelector((state) => state.err);
     const navigate = useNavigate();
     const [password, setPassword] = useState(loginRedux.pass || "");
     const [isLogin, setIsLogin] = useState(true);
-    const [parametro, setparametro] = useState({email:'', password:'', nombre:'', edad:'', direccion:''});
+    const [parametro, setparametro] = useState({ email: '', password: '', nombre: '', edad: '', direccion: '', avatar:'' });
     const [userId, setUserId] = useState(loginRedux.userId || "");
     const dispatch = useDispatch()
 
@@ -20,17 +22,24 @@ const Home = (props = []) => {
         method: "post",
         body: { email: parametro.email, password: parametro.password },
         onSuccess: (usr) => {
-            console.log('se envio correctamente')
-            dispatch(setCredentials(usr))
-            navigate("/productos");
+            console.log('se envio correctamente', usr)
+            if (usr.success) {
+                dispatch(setCredentials(usr))
+                navigate("/productos");
+            } else {
+                dispatch(setError(usr.message))
+            }
         }
     });
-    const { doSend: doSingUp, errors: errorsSingup} = useRequest({
+    const { doSend: doSingUp, errors: errorsSingup } = useRequest({
         url: "/api/singup",
         method: "post",
-        body: { email: parametro.email, password: parametro.password, nombre: parametro.nombre, edad: parametro.edad, direccion: parametro.direccion },
+        headers: {
+            'content-type': 'multipart/form-data'
+        },
+        body: { email: parametro.email, password: parametro.password, nombre: parametro.nombre, edad: parametro.edad, direccion: parametro.direccion, avatar: parametro.avatar  },
         onSuccess: (usr) => {
-            console.log('se envio correctamente')
+            console.log('se envio correctamente', usr)
             dispatch(setCredentials(usr))
             navigate("/productos");
         }
@@ -45,7 +54,7 @@ const Home = (props = []) => {
         doSingUp()
     }
     const setParameter = (data, param) => {
-        setparametro( {...parametro ,...{[param] : data}})
+        setparametro({ ...parametro, ...{ [param]: data } })
     }
     return (
         <div className='flex'>
@@ -57,6 +66,9 @@ const Home = (props = []) => {
                 <h1 className=" mx-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r  from-sky-600 to-blue-500">
                     Adidas 2022
                 </h1>
+                <div class="p-4 my-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                    <span class="font-medium">{error.error}</span>
+                </div>
                 <form className='w-96 flex-col  flex justify-center items-center mt-40'>
                     {isLogin ? <Login setParameter={setParameter} parameters={parametro} handleLogin={handlerLogin} />
                         : <SingUp setParameter={setParameter} parameters={parametro} handleSingUp={handleSingUp} />}

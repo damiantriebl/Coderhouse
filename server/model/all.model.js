@@ -1,6 +1,10 @@
 import { model } from "mongoose";
-import UsuarioSchema from "./usuarios.schema";
+import ProductosSchema from "./productos.schema.js";
+import UsuarioSchema from "./usuarios.schema.js";
 
-export const productosModel = model("usuarios",
+export const usuarioModel = model("usuarios",
 UsuarioSchema
+)
+export const productosModel = model("productos",
+ProductosSchema
 )
