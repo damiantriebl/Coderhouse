@@ -1,4 +1,4 @@
-import { connect } from "../config/configMongo.js";
+import { connect } from "../config/mongoConfig.js";
 
 class productosDaoMongo {
   constructor(db) {
@@ -26,7 +26,6 @@ class productosDaoMongo {
   async getAll() {
     try {
       let getall = await this.db.find({});
-      console.log('getall es', getall)
       return { success: true, data: getall };;
     } catch (error) {
       return { success: false ,error: error.message };

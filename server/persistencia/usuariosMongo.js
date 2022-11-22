@@ -1,4 +1,4 @@
-import { connect } from "../config/configMongo.js";
+import { connect } from "../config/mongoConfig.js";
 
 class usuariosDaoMongo {
   constructor(db) {
@@ -10,7 +10,7 @@ class usuariosDaoMongo {
       usuario.save();
       return usuario;
     } catch (error) {
-      console.warm("hay un error ", error);
+      console.warn("hay un error ", error);
       return { error: error.message };
     }
   }
@@ -27,7 +27,7 @@ class usuariosDaoMongo {
       let getByEmail = await this.db.findOne({ email });
       return getByEmail;
     } catch (error) {
-      return { error: error.message };
+      return { message: 'no se encontro el registro', success: false, error: error.message };
     }
   }
   async getAll() {

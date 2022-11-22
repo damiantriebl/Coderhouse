@@ -1,107 +1,199 @@
-const SingUp = ({ setParameter, parameters, handleSingUp }) => {
-    const { email, password, nombre, edad, direccion, avatar } = parameters;
-    return (
+import { FileInput, Label, TextInput } from 'flowbite-react';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { toggleAdministrador } from "../redux/AdministradorSlice";
+import axios from 'axios';
+import { useSelector, useDispatch } from "react-redux";
+
+const SingUp = ({ setIsLogin }) => {
+    const [parametro, setparametro] = useState({ email: '', password: '', nombre: '', edad: '', direccion: '' });
+    const [files, setFiles] = useState([]);
+    const administrador = useSelector((state) => state.administrador.value);
+    const [valido, setValido] = useState(false)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const onSubmit = async (e) => {
+        const formData = new FormData();
+        formData.append('file', files)
+        formData.append("email", parametro.email)
+        formData.append("password", parametro.password)
+        formData.append("nombre", parametro.nombre)
+        formData.append("edad", parametro.edad)
+        formData.append("direccion", parametro.direccion)
+        formData.append("isAdmin", administrador)
+
+        try {
+            const res = await axios.post('http://localhost:4000/api/signup', formData);
+            setValido(true)
+        } catch (err) {
+            if (err.response?.status === 500) {
+                console.log(err);
+            } else {
+                console.log('respuesta', err.response.data.msg);
+            }
+        }
+    }
+
+    const renderForm = () => {
+        return (
+        <form>
+            <div className="relative z-0 mb-6 w-full group">
+                <label
+                    htmlFor="checked-toggle"
+                    className="inline-flex relative items-center cursor-pointer"
+                >
+                    <input
+                        type="checkbox"
+                        value=""
+                        id="checked-toggle"
+                        className="sr-only peer"
+                        onChange={() => dispatch(toggleAdministrador())}
+                        checked={administrador}
+                    />
+                    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                    <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Administrador
+                    </span>
+                </label>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="email"
+                            value="Email"
+                        />
+                    </div>
+                    <TextInput
+                        id="email"
+                        type="email"
+                        placeholder="usuainBolt@google.com"
+                        value={parametro.email}
+                        onChange={e => setparametro({ ...parametro, email: e.currentTarget.value })}
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="password"
+                            value="Password"
+                        />
+                    </div>
+                    <TextInput
+                        id="password"
+                        type="password"
+                        placeholder="**"
+                        value={parametro.password}
+                        onChange={e => setparametro({ ...parametro, password: e.currentTarget.value })}
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="nombre"
+                            value="Nombre"
+                        />
+                    </div>
+                    <TextInput
+                        id="nombre"
+                        type="nombre"
+                        placeholder="Usuain Bolt"
+                        value={parametro.nombre}
+                        onChange={e => setparametro({ ...parametro, nombre: e.currentTarget.value })}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="direccion"
+                            value="Direccion"
+                        />
+                    </div>
+                    <TextInput
+                        id="direccion"
+                        type="direccion"
+                        placeholder="en la pista nº 42"
+                        value={parametro.direccion}
+                        onChange={e => setparametro({ ...parametro, direccion: e.currentTarget.value })}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="edad"
+                            value="Edad"
+                        />
+                    </div>
+                    <TextInput
+                        id="edad"
+                        type="number"
+                        placeholder="en la pista nº 42"
+                        value={parametro.edad}
+                        onChange={e => setparametro({ ...parametro, edad: e.currentTarget.value })}
+                    />
+                </div>
+
+                <div id="fileUpload">
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="file"
+                            value="Upload file"
+                        />
+                    </div>
+                    <FileInput
+                        id="file"
+                        disabled={!!files.length}
+                        type="file"
+                        onChange={(e) => setFiles(e.target.files[0])}
+                        helperText="A profile picture is useful to confirm your are logged into your account"
+                    />
+                </div>
+
+            </div >
+            <div className='w-100 text-center'>
+                <button
+                    type="button"
+                    onClick={onSubmit}
+                    className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                    Cargar el usuario
+                </button>
+            </div>
+        </form >
+        )
+    }
+    const renderOk = () => {
+        return(
         <>
-            <div className="relative z-0 mb-6 w-full group">
-                <input
-                    type="text"
-                    name="email"
-                    id="email"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    onChange={(e) => setParameter(e.currentTarget.value, 'email')}
-                    value={email}
-                    required
-                />
-                <label
-                    htmlFor="email"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                    email
-                </label>
-            </div>
-
-            <div className="relative z-0 mb-6 w-full group">
-                <input
-                    type="text"
-                    name="password"
-                    id="password"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    onChange={(e) => setParameter(e.currentTarget.value, 'password')}
-                    value={password}
-                    required
-                />
-                <label
-                    htmlFor="password"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                    Contraseña
-                </label>
-            </div>
-            <div className="relative z-0 mb-6 w-full group">
-                <input
-                    type="text"
-                    name="nombre"
-                    id="nombre"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    onChange={(e) => setParameter(e.currentTarget.value, 'nombre')}
-                    value={nombre}
-                    required
-                />
-                <label
-                    htmlFor="nombre"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                    nombre
-                </label>
-            </div>
-            <div className="relative z-0 mb-6 w-full group">
-                <input
-                    type="text"
-                    name="direccion"
-                    id="direccion"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    onChange={(e) => setParameter(e.currentTarget.value, 'direccion')}
-                    value={direccion}
-                    required
-                />
-                <label
-                    htmlFor="direccion"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                    direccion
-                </label>
-            </div>
-            <div className="relative z-0 mb-6 w-full group">
-                <input
-                    type="number"
-                    name="edad"
-                    id="edad"
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    onChange={(e) => setParameter(e.currentTarget.value, 'edad')}
-                    value={edad}
-                    required
-                />
-                <label
-                    htmlFor="edad"
-                    className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                    edad
-                </label>
-                
-                <label class="block my-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="user_avatar">Subir imagen</label>
-                <input onChange={(e) => setParameter(e.currentTarget.value, 'avatar')} class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file" />
-                <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">Su avatar permitira que te conozcamos un poco mas</div>
-
-            </div>
+            <h1>El usuario se registro correctamente, por favor entre por primera ves</h1>
             <button
                 type="button"
-                onClick={handleSingUp}
+                onClick={()=>navigate('/')}
                 className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-                Cargar el usuario
+                El usuario
             </button>
+        </>)
+    }
+    return (
+        <>
+            {valido ? renderOk() : renderForm()}
+            {!valido && <>
+                <div className=" text-sm text-gray-500 my-5">
+                        O si ya tenes cuenta
+                    </div>
+                    <button
+                        type="button"
+                        onClick={setIsLogin}
+                        className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        Loguearse
+                    </button>
+            </>}
         </>
 
     )
+
+
 }
 export default SingUp

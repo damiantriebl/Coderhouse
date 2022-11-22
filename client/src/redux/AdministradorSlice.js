@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  value: false,
-  userId: "",
-  pass: "",
-  user: null,
+const initialState = {  
+  avatar: "",
+  direccion: "",
+  edad: 0,
+  email: "",
+  id: "",
+  isAdmin: false
 }
 
 export const administradorSlice = createSlice({
@@ -12,28 +14,23 @@ export const administradorSlice = createSlice({
   initialState,
   reducers: {
     toggleAdministrador: (state) => {
-      state.value = !state.value
+      state.isAdmin = !state.value
     },
-    setUserId: (state, action) => {
-      state.userId = action.payload
-    },
-    setPass: (state, action) => {
-      state.pass = action.payload
-    },
+  
     setCredentials: (state,action) => {
-      state.user = action.payload.user;
-      state.value = action.payload.isAdmin
+      state.avatar = action.payload?.avatar;
+      state.direccion = action.payload?.direccion;
+      state.edad = action.payload?.edad;
+      state.id = action.payload?.id;
+      state.isAdmin = action.payload?.isAdmin;
+      state.email = action.payload?.email;
     },
     logOut: (state) => {
-      state.user = null
+      state = null
     }
   },
 })
 
-// Action creators are generated for each case reducer function
-export const { toggleAdministrador, setUserId, setPass, setCredentials, logOut } = administradorSlice.actions
-
+export const { toggleAdministrador,   setCredentials, logOut } = administradorSlice.actions
 export default administradorSlice.reducer
 
-export const selectCurrentUser = (state) => state.auth.user
-export const selectCurrentToken = (state) => state.auth.token

@@ -6,7 +6,8 @@ const UsuarioSchema = new Mongoose.Schema({
     edad: Number,
     direccion: String,
     telefono: String,
-    foto: String,
+    avatar: String,
+    isAdmin: Boolean,
     dateOfJoining: {
         type: Date,
         default: new Date(),

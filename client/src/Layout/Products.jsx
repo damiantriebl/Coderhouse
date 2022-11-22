@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import Product from './Product';
 import ModalConfirm from "./modalConfirm";
 import useRequest from '../hooks/useRequest';
-
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../redux/AdministradorSlice";
 const Products = (props = []) => {
+    const dispatch = useDispatch();
+    const [user, setUser] = useLocalStorage("user", "");
     const [products, setProducts] = useState([]);
     const { doSend , errors  } = useRequest({
         url: "/api/productos",
@@ -15,11 +19,15 @@ const Products = (props = []) => {
             }else {
                 console.log('no hay productos')
             }
-            console.log('funcionando')
         }
     });
     useEffect(() => {
         doSend()
+    }, []) 
+    useEffect(() => {
+        if(user ){
+            dispatch(setCredentials(user))
+       }
     }, []) 
     const id = useId();
     if( products.length === 0){

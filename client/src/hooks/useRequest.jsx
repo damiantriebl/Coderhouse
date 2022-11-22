@@ -1,47 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setError } from '../redux/ErrorSlice'
 
-const useRequest = ({ url, method, body, onSuccess, headers='' }) => {
+const useRequest = ({ url, method, body, onSuccess, headers = '' }) => {
   const [errors, setErrors] = useState(null);
-
+  const dispatch = useDispatch();
   const doSend = async (props = {}) => {
+    setErrors(null);
+    const formatUrl = `http://localhost:4000${url}`;
     try {
-      setErrors(null);
-      const formatUrl = `http://localhost:4000${url}`;
-    /*   const response = await axios[method](formatUrl,       
-          {  ...props, ...body },
-          {
-            withCredentials: true,
-            xsrfCookieName: 'csrftoken_testtest',
-            xsrfHeaderName: 'X-CSRFToken',
-        } 
-      ); */
-      const response = axios({
-        method,
-        data: body,
-        headers,
-        withCredentials: true,
-        url: formatUrl,
-      }).then((res) => {
-        console.log(res)
-        if (onSuccess) {
-          onSuccess(res.data);
-        }
-        return res.data;
-      });
+      const response = await axios[method](formatUrl, { ...props, ...body })
+      if (response) {
+        onSuccess(response.data);
+      }
+      return response.data;
     } catch (err) {
-      <h1>{err}</h1>;
-      setErrors(
-        <div className="alert alert-danger">
-          <h4>Ooops....</h4>
-          <ul className="my-0">
-            {err.response?.data.errors.map((err) => (
-              <li key={err.field}>{err.message}</li>
-            ))}
-          </ul>
-        </div>
-      );
+      dispatch(setError(err.message))
     }
+
   };
   return { doSend, errors };
 };
