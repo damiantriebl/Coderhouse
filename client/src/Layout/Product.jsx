@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import useRequest from '../hooks/useRequest';
 import { toggleDrawner, updateBody, toggleModal,deleteId } from "../redux/EditorSlice";
@@ -9,17 +10,20 @@ const Product = ({id, producto, precio, thumbnail }) => {
     const dispatch = useDispatch()
     const carro = useSelector((state) => state.carro.carrito)
     const administrador = useSelector((state) => state.administrador);
-        
+   
     const {doSend, errors} = useRequest({
         url: `/api/carro/${administrador?.id}` ,
         method: "post",
         body: {idProducto: id, producto, precio, thumbnail, idUsuario: administrador, timeStamp: Date.now()},
-        onSuccess: () => dispatch(addCart({idProducto: id, producto, precio, thumbnail}))
+        onSuccess: (obj) => {
+            dispatch(addCart({idProducto: id, producto, precio, thumbnail}))
+        }
       });
       const {doSend : doDelete, errors : errorDelete} = useRequest({
         url: `/api/carro/${administrador?.id}/` ,
-        method: "delete",
-        onSuccess: () => dispatch(deleteElementCart())
+        method: "patch",
+        body: {idProducto: id},
+        onSuccess: (obj) => {if(obj.ok) dispatch(deleteElementCart(id))}
       });
     const handleEdit = () => {
         dispatch(toggleDrawner())
@@ -29,10 +33,11 @@ const Product = ({id, producto, precio, thumbnail }) => {
         dispatch(toggleModal())    
         dispatch(deleteId(id))        
     }
-    const handleCart = () => {
-        if(!carro.find((obj)=>obj.idProducto===id)){
+    const handleCart =  () => {
+        const item = carro.find((obj)=>obj.idProducto===id)
+        if(!item){
             doSend();           
-       }else{
+        }else{        
             doDelete();
        }
        
@@ -47,8 +52,7 @@ const Product = ({id, producto, precio, thumbnail }) => {
                     <div className='flex flex-row h-10 my-3 justify-between content-center items-center'>
                         <h5 className="text-xl my-4 font-semibold tracking-tight text-gray-900 dark:text-white">{producto}</h5>
                         {administrador?.isAdmin && (
-                            <div className='flex'>
-                                
+                            <div className='flex'>                                
                                 <button onClick={handleEdit} className="text-white p-2 bg-gradient-to-br from-green-200 via-green-400 to-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4 text-center "><EditIcon className="w-6" /></button> 
                                 <button onClick={handleDelete} className="text-white p-2 bg-gradient-to-r from-red-500 to-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4  text-center "><DeleteIcon className="w-6" /></button> 
                             </div>                       

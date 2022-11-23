@@ -29,17 +29,17 @@ router.post('/api/carro/:id/', async (req, res) => {
     console.log(req.params)
     console.log(req.body)
     const productoCarro = await  new carroNormalizer().guardarcarro(req.params.id, req.body);
-    if (!productoCreado?.error){
+    if (!productoCarro?.error){
         res.json({
             ok: true,
             mensaje: 'El Post se edito correctamente',
-            id: productoCreado
+            id: productoCarro
         })
     }else {
         res.json({
             ok: false,
             mensaje: 'El post no se pudo editar ',
-            error: productoCreado?.error,
+            error: productoCarro?.error,
         })
     }
 })
@@ -61,14 +61,13 @@ router.put('/api/carro/:id', async (req, res) => {
     }
 })
 
-router.delete('/api/carro/:id', async (req, res) => {
-    console.log('se borra')
-    const carritoCreado = await objCarrito.deleteById(req.params.id);
+router.patch('/api/carro/:id', async (req, res) => {
+    const carritoCreado = await new carroNormalizer().deleteByUserAndObject(req.params.id, req.body.idProducto);
     if (!carritoCreado?.error){
         res.json({
             ok: true,
             mensaje: 'El Post se borro correctamente',
-            id: carritoCreado
+            data: carritoCreado.data
         })
     }else {
         res.json({

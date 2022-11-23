@@ -17,11 +17,19 @@ class carroNormalizer {
     console.log("salvado", carroGuardado);
     return {
       message: "se cargo correctamente",
-      success: "err",
+      success: true,
       data: carroGuardado,
     };
   }
-
+  async deleteByUserAndObject(user, idObj) {
+    console.log(user , idObj);    
+    const carroGuardado = await new carroDaoMongo().deleteByUserAndObject(user, idObj);
+    return {
+      message: "se borro correctamente",
+      success: true,
+      data: carroGuardado,
+    };
+  }
   async cargarTodosLoscarros() {
     const carros = await new carroDaoMongo().getAll();
     console.log("carros!", carros);
