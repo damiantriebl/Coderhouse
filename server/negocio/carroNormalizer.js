@@ -1,5 +1,4 @@
-import carroDaoMongo from "../persistencia/carroMongo.js";
-
+import {getcarroDao} from "../Dao/carroDao.js";
 class carroNormalizer {
   constructor() {}
   async guardarcarro(id, obj) {
@@ -13,7 +12,7 @@ class carroNormalizer {
       fechaAlta: obj.timeStamp,
       cantidad: 1
     };
-    const carroGuardado = await new carroDaoMongo().save(carro);
+    const carroGuardado = await new getcarroDao().save(carro);
     console.log("salvado", carroGuardado);
     return {
       message: "se cargo correctamente",
@@ -23,7 +22,7 @@ class carroNormalizer {
   }
   async deleteByUserAndObject(user, idObj) {
     console.log(user , idObj);    
-    const carroGuardado = await new carroDaoMongo().deleteByUserAndObject(user, idObj);
+    const carroGuardado = await new getcarroDao().deleteByUserAndObject(user, idObj);
     return {
       message: "se borro correctamente",
       success: true,
@@ -31,7 +30,7 @@ class carroNormalizer {
     };
   }
   async cargarTodosLoscarros() {
-    const carros = await new carroDaoMongo().getAll();
+    const carros = await new getcarroDao().getAll();
     console.log("carros!", carros);
     if (carros.data?.length > 0) {
       return {
