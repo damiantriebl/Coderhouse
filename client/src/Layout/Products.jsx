@@ -5,7 +5,7 @@ import ModalConfirm from "./modalConfirm";
 import useRequest from '../hooks/useRequest';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useDispatch, useSelector } from "react-redux";
-import {addProductos} from '../redux/carroSlice'
+import {addProductos, addCart, initCart} from '../redux/carroSlice'
 import { setCredentials } from "../redux/AdministradorSlice";
 const productos = (props = []) => {
     const dispatch = useDispatch();
@@ -22,11 +22,27 @@ const productos = (props = []) => {
             }
         }
     });
+    const { doSend : doCart , errors : errorCart  } = useRequest({
+        url: `/api/carro/${user.id}`,
+        method: "get",
+        onSuccess: (obj) => {
+            if(obj.carro.success){
+                dispatch(initCart(obj.carro.data))
+            }else {
+                console.log('no hay productos')
+            }
+        }
+    });
     useEffect(() => {
-        doSend()
+        doSend()        
     }, []) 
+    useEffect(()=>{
+        if(user){
+            doCart()
+        }
+    }, [])
     useEffect(() => {
-        if(user ){
+        if(user){
             dispatch(setCredentials(user))
        }
     }, []) 

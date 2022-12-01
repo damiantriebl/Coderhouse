@@ -2,7 +2,7 @@ import productosDaoMongo from "../persistencia/productosMongo.js";
 
 class productosNormalizer {
   constructor() {}
-  async guardarProducto(obj) {
+  async guardarProducto(obj, user) {
     if (
       obj.productos &&
       obj.precio &&
@@ -11,9 +11,11 @@ class productosNormalizer {
       const producto = {
         productos: obj.productos,
         precio: obj.precio,
-        thumbnail: obj.thumbnail,        
+        thumbnail: obj.thumbnail,  
+              
       };
-      const productoGuardado = await new productosDaoMongo().save(producto)
+      console.log('dtcon user' ,user)
+      const productoGuardado = await new productosDaoMongo().save(producto, user)
       console.log("salvado", productoGuardado);
       return {message: "se cargo correctamente", success: "err", data: productoGuardado}
 

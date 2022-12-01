@@ -1,41 +1,35 @@
 import { connect } from "../config/mongoConfig.js";
 
-class usuariosDaoMongo {
+class productosDaoMongo {
   constructor(db) {
-    this.db = connect().usuarioModel;
+    this.db = connect().productosModel;
   }
-  async save(user) {
+  async save(producto) {
     try {
-      let usuario = await this.db.create(user);
-      usuario.save();
-      return usuario;
+      console.log('dtcon produ', producto)
+      let productoObj = await this.db.create(producto);
+      productoObj.save();
+      return productoObj;
     } catch (error) {
-      console.warn("hay un error ", error);
+      console.warm("hay un error ", error);
       return { error: error.message };
     }
   }
   async getById(id) {
     try {
       let getById = await this.db.find({ id: _id });
-      return getById;
+      return { success: true, data: getById,  error: error.message };;
     } catch (error) {
       return { error: error.message };
     }
   }
-  async getByEmail(email) {
-    try {
-      let getByEmail = await this.db.findOne({ email });
-      return getByEmail;
-    } catch (error) {
-      return { message: 'no se encontro el registro', success: false, error: error.message };
-    }
-  }
+ 
   async getAll() {
     try {
       let getall = await this.db.find({});
-      return getall;
+      return { success: true, data: getall };;
     } catch (error) {
-      return { error: error.message };
+      return { success: false ,error: error.message };
     }
   }
   /*  async updateById(id, obj) {
@@ -68,4 +62,4 @@ class usuariosDaoMongo {
   }
 }
 
-export default usuariosDaoMongo;
+export default productosDaoMongo;

@@ -16,7 +16,7 @@ const Product = ({id, producto, precio, thumbnail }) => {
         method: "post",
         body: {idProducto: id, producto, precio, thumbnail, idUsuario: administrador, timeStamp: Date.now()},
         onSuccess: (obj) => {
-            dispatch(addCart({idProducto: id, producto, precio, thumbnail}))
+            dispatch(addCart(obj.id.data))
         }
       });
       const {doSend : doDelete, errors : errorDelete} = useRequest({
@@ -34,7 +34,7 @@ const Product = ({id, producto, precio, thumbnail }) => {
         dispatch(deleteId(id))        
     }
     const handleCart =  () => {
-        const item = carro.find((obj)=>obj.idProducto===id)
+        const item = carro.find((obj)=>obj?.idProducto===id.toString())
         if(!item){
             doSend();           
         }else{        
@@ -60,7 +60,7 @@ const Product = ({id, producto, precio, thumbnail }) => {
                     </div>            
                     <div className="flex justify-between items-center">
                         <span className="text-3xl font-bold text-gray-900 dark:text-white">${precio}</span>
-                        {!carro.find((obj)=>obj.idProducto===id ? true : false) ?  <button onClick={handleCart} className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4 px-5 py-2.5 text-center ">Agregar al carro</button> : <button  onClick={handleCart} className="text-white bg-gradient-to-r from-red-500 to-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4 px-5 py-2.5 text-center ">en el carro</button>}
+                        {!carro.find((obj)=>obj?.idProducto === id.toString() ? true : false) ?  <button onClick={handleCart} className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4 px-5 py-2.5 text-center ">Agregar al carro</button> : <button  onClick={handleCart} className="text-white bg-gradient-to-r from-red-500 to-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm ml-4 px-5 py-2.5 text-center ">en el carro</button>}
                     </div>
                 </div>
         </div>

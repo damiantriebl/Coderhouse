@@ -23,12 +23,13 @@ export const cartSlice = createSlice({
     },
     addCart: (state, action) => {
       state.carrito.push(action.payload)
-  },
+   },
     initCart: (state, action) => {
-      state.carrito = [...action.payload.carro]
-  },
+      console.log('el action en add cart', action)
+      state.carrito =  [...action.payload]
+    },
     deleteElementCart: (state, action) => {
-          state.carrito = [state.carrito].filter(item => item.idProducto !== action.payload)
+      state.carrito = state.carrito.filter(item => +item.idProducto !== +action.payload)
     }    
   },
 })

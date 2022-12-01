@@ -1,10 +1,27 @@
 import {getcarroDao} from "../Dao/carroDao.js";
 class carroNormalizer {
   constructor() {}
-  async guardarcarro(id, obj) {
-
+  async getAll(idUser) {
+   
+    const todoElCarro = await new getcarroDao().getAll(idUser);
+    if(todoElCarro.success){
+      return {
+        message: "se obtubo el carro",
+        success: true,
+        data: todoElCarro.data,
+      };
+    }else {
+      return {
+        message: "algo fallo",
+        success: false,
+        error: todoElCarro.error,
+      };
+    }
+   
+  }
+  async guardarcarro(usuario, obj) {
     const carro = {
-      usuario: id,
+      idUser: usuario,
       idProducto: obj.idProducto,
       producto: obj.producto,
       precio: obj.precio,
@@ -12,8 +29,8 @@ class carroNormalizer {
       fechaAlta: obj.timeStamp,
       cantidad: 1
     };
+    console.log ('datos del carro', carro)
     const carroGuardado = await new getcarroDao().save(carro);
-    console.log("salvado", carroGuardado);
     return {
       message: "se cargo correctamente",
       success: true,

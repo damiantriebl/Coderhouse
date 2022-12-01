@@ -2,8 +2,9 @@ import express from 'express';
 import carroNormalizer from '../negocio/carroNormalizer.js'
 
 const router = express.Router();
-router.get('/api/carro', async (req, res) =>{
-    const todosCarritos = await new carroNormalizer().getAll();
+router.get('/api/carro/:id', async (req, res) =>{
+    const userId = req.params.id
+    const todosCarritos = await new carroNormalizer().getAll(userId);
     if (!todosCarritos?.error){
         res.json({
             ok: true,
