@@ -1,0 +1,22 @@
+<body>
+    <div style="display: flex; flex-direction: column;  align-items: center;">
+    <h1>Lista de Colores</h1>
+    <form action="/" method="POST">
+      <input type="text" name="color" placeholder="Inserte un color" />
+      <button type="submit">Enviar</button>
+    </form>
+        <ul >
+
+        
+      <% if(colors) {%> 
+          <% colors.forEach(color => { %>
+               <% if(color === "black") { %>
+       <li style="padding: 1rem; font-size:xx-large; background-color: darkred; color: <%= color %>"> <%= color %> </li>
+      <% } else {%>
+      <li style="padding: 1rem; font-size:xx-large; background-color: black; color: <%= color %>"><%= color %></li>
+      <% } %>
+       <% }) %>
+       <% } %>
+      </ul>
+    </div>
+  </body> 
