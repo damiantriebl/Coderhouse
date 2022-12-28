@@ -4,15 +4,17 @@ import mongoose from "mongoose";
 import passport from "passport";
 import passportLocal from "passport-local";
 import session from "express-session";
-import User from "./persistencia/usuariosMongo.js";
 import usuariosDaoMongo from "./persistencia/usuariosMongo.js";
 import bcrypt from "bcryptjs";
 import { UserRouter } from "./routes/User.Routes.js";
 import { ProductosRouter } from "./routes/Productos.Routes.js";
 import { CarritoRouter } from "./routes/Carro.Router.js";
-import jwt from "jsonwebtoken";
+import { emailRouter} from './routes/email.Router.js'
 import * as dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import {Server} from 'socket.io'
+import http from 'http';
+import comentariosNormalizer from "./negocio/comentariosNormalizer.js";
 
 dotenv.config();
 
@@ -36,6 +38,7 @@ app.use(passport.session());
 app.use(UserRouter);
 app.use(ProductosRouter);
 app.use(CarritoRouter);
+app.use(emailRouter);
 passport.use(
   new LocalStrategy(
     {
@@ -104,8 +107,28 @@ app.post("/api/login", passport.authenticate('local'), (req, res) => {
   res.send({user: userSended })
 });
 
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", 'POST']
+    }
+})
+
+io.on('connection', async (socket) =>{
+  const listaComentarios = await new comentariosNormalizer().cargarTodosLosComentarios()
+  socket.emit('comentarios', listaComentarios)
+ 
+  socket.on('message', async (data) => {    
+      await new comentariosNormalizer().guardarComentario({nombre: data.body.nombre, titulo: data.body.titulo, comentario: data.body.comentario, tipo: data.body.tipo, fecha: new Date().toLocaleDateString('es-ar', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) 
+      });
+      const listaComentarios = await new comentariosNormalizer().cargarTodosLosComentarios()
+      io.sockets.emit('comentarios', listaComentarios)
+  })
+})
 const PORT = process.env.port || 4000;
 
 app.listen(PORT, () => {
   console.log("Se esta escuchando", PORT);
 });
+server.listen(4001, () => {console.log('server de websocket escuchando en el 4001')})

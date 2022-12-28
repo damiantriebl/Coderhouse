@@ -1,4 +1,4 @@
-import usuariosDaoMongo from "../persistencia/usuariosMongo.ts";
+import usuariosDaoMongo from "../persistencia/usuariosMongo.js";
 import bcrypt from 'bcryptjs'
 class userNormalizer {
   constructor() {}

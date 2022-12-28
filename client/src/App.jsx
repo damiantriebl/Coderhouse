@@ -24,7 +24,7 @@ function App() {
           <Route path="carrito/:email" element={<RutaProtegida user={user}><Cart /></RutaProtegida>} />
         </Routes>
       </div>
-      {/*<Comments home className={home && "hidden "} /> */}
+      <Comments home className={home && "hidden "} />
     </div>
   );
 }

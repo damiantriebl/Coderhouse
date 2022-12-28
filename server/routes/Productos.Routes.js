@@ -5,7 +5,6 @@ const router = express.Router();
 
 
 router.get('/api/productos', async (req, res) => {
-    const {email, password} = req.body;
     const respuesta = await new productosNormalizer().cargarTodosLosProductos();
     res.json(respuesta);
 })

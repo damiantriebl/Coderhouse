@@ -1,17 +1,20 @@
 import { useState } from "react";
-
+import useSocket from "../hooks/useSockect"
 const LeaveComment = () => {
   const [nombre, setNombre] = useState("")
   const [titulo, setTitulo] = useState("")
   const [comentario, setComentario] = useState("")
-/*   const {doRequest} = useSocket({
+  const [tipo, setTipo] = useState("Usuario")
+
+  const { doRequest } = useSocket({
     room: 'message',
     body: {
       nombre,
       titulo,
+      tipo,
       comentario
-    },  
-  }); */
+    },
+  });
 
   return (
     <section className="bg-white/25  rounded-2xl">
@@ -19,7 +22,7 @@ const LeaveComment = () => {
         <h4 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
           Contanos Tu experiencia
         </h4>
-        
+
         <form action="#" name="form" className="space-y-8">
           <div>
             <label
@@ -53,12 +56,20 @@ const LeaveComment = () => {
               required
             />
           </div>
+          <div class="flex items-center mb-4">
+            <input checked={tipo === "Usuario"} id="default-radio-1" onClick={(e) => setTipo("Usuario")}  type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+              <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Usuario</label>
+          </div>
+          <div class="flex items-center">
+            <input checked={tipo === "Sistema"} id="default-radio-2" onClick={(e) => setTipo("Sistema")} type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+              <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sistema</label>
+          </div>
           <div className="sm:col-span-2">
             <label
               htmlFor="comentario"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
             >
-              Explayate a gusto
+              Explayate a gusto {tipo}
             </label>
             <textarea
               id="comentario"

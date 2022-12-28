@@ -1,6 +1,6 @@
 import * as Mongoose from 'mongoose';
 import * as dotenv from 'dotenv'
-import {usuarioModel, productosModel, CarroModel} from '../model/all.model.js';
+import {usuarioModel, productosModel, CarroModel, comentariosModel} from '../model/all.model.js';
 dotenv.config()
 
 let database;
@@ -23,7 +23,9 @@ export const connect = () => {
     return {
         usuarioModel,
         productosModel,
-        CarroModel
+        CarroModel,
+        comentariosModel
+
     };
 };
   

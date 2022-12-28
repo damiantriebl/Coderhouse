@@ -2,7 +2,6 @@ import {getcarroDao} from "../Dao/carroDao.js";
 class carroNormalizer {
   constructor() {}
   async getAll(idUser) {
-   
     const todoElCarro = await new getcarroDao().getAll(idUser);
     if(todoElCarro.success){
       return {

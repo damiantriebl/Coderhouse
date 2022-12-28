@@ -2,33 +2,30 @@ import logo from "../assets/adidas-logo.svg";
 import useRequest from '../hooks/useRequest';
 import DrawnerForm from "./DrawnerForm";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleAdministrador } from "../redux/AdministradorSlice";
+import { logOut } from "../redux/AdministradorSlice";
 import { toggleDrawnerCarro, addCart, initCart } from "../redux/carroSlice";
 import { toggleDrawner, updateBody } from "../redux/EditorSlice";
 import DrawnerCarro from "./DrawnerCarro";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../hooks/useLocalStorage";
 
-const Nav = ({home}) => {
+const Nav = ({ home }) => {
   const dispatch = useDispatch();
-  const location = useLocation(); 
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useLocalStorage('user', null)
   const administrador = useSelector((state) => state.administrador.value);
-  const userId = useSelector((state) => state.administrador.userId);
   const openDrawner = useSelector((state) => state.editor.openDrawner);
   const openDrawnerCarro = useSelector((state) => state.carro.openDrawnerCarro);
   const carrito = useSelector((state) => state.carro.carrito);
-  const {doSend : doProductos , errors : errorsProductos} = useRequest({
-    url: `/api/productos/`,
+  const { doSend: doLogout, errors: errorsLogout } = useRequest({
+    url: `/api/logout/`,
     method: "get",
     body: {},
-    onSuccess: (objs) =>{ dispatch(initCart(objs))}
-  });
-
-  const {doSend : doGet , errors : errorsGet} = useRequest({
-    url: `/api/carro/${userId}`,
-    method: "get",
-    body: {},
-    onSuccess: (objs) =>{ dispatch(initCart(objs))}
+    onSuccess: () => { 
+      dispatch(logOut());
+      setUsuario(null)
+      navigate("/");
+    }
   });
 
   const handleNew = () => {
@@ -40,14 +37,18 @@ const Nav = ({home}) => {
         thumbnail: "",
         edit: false,
       })
-      );
-      dispatch(toggleDrawner());
+    );
+    dispatch(toggleDrawner());
     ;
-    }
-    const handleCarro = () => {
-        dispatch(toggleDrawnerCarro());      
-      }
- 
+  }
+  const handleCarro = () => {
+    dispatch(toggleDrawnerCarro());
+  }
+  const handleDesloguear = () => {
+    doLogout()
+  }
+
+
   return (
     <>
       {openDrawner && <DrawnerForm open={openDrawner} />}
@@ -58,23 +59,31 @@ const Nav = ({home}) => {
           <img src={logo} className="w-16 h-16 " alt="Adidas" />
           <h1 className="mx-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r  from-sky-600 to-blue-500">
             Adidas 2022
-          </h1>       
-          {  location.pathname === "/productos" && <>
-          <button 
-            className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
-            onClick={handleCarro}
-          >
-           Ver Carro
-          </button>
-          {administrador?.isAdmin && 
-          <button
-            className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
-            onClick={handleNew}
-          >
-            Ingresar Producto
-          </button>}
+          </h1>
+          {location.pathname === "/productos" && <>
+            <button
+              className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
+              onClick={handleCarro}
+            >
+              Ver Carro
+            </button>
+            {administrador?.isAdmin &&
+              <>
+                <button
+                  className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
+                  onClick={handleNew}
+                >
+                  Ingresar Producto
+                </button>
+              </>}
+                <button
+                  className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
+                  onClick={handleDesloguear}
+                >
+                  Desloguearse
+                </button>
           </>
-        }
+          }
         </div>
       </nav>
     </>

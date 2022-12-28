@@ -1,5 +1,6 @@
 import { model } from "mongoose";
 import CarroSchema from "./carro.schema.js";
+import ComentariosSchema from "./comentarios.schema.js";
 import ProductosSchema from "./productos.schema.js";
 import UsuarioSchema from "./usuarios.schema.js";
 
@@ -11,4 +12,7 @@ ProductosSchema
 )
 export const CarroModel = model("carro",
 CarroSchema
+)
+export const comentariosModel = model("comentarios",
+ComentariosSchema
 )

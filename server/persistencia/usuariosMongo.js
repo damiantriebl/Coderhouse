@@ -1,7 +1,7 @@
 import { connect } from "../config/mongoConfig.js";
 
 class usuariosDaoMongo {
-  constructor(db) {
+  constructor() {
     this.db = connect().usuarioModel;
   }
   async save(user) {

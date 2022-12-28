@@ -26,7 +26,13 @@ export const administradorSlice = createSlice({
       state.email = action.payload?.email;
     },
     logOut: (state) => {
-      state = null
+      console.log('estado', state, initialState)
+      state.avatar = "";
+      state.direccion =  "";
+      state.edad = 0,
+      state.email = "",
+      state.id = "",
+      state.isAdmin = false
     }
   },
 })

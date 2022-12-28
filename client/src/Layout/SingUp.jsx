@@ -35,6 +35,7 @@ const SingUp = ({ setIsLogin }) => {
     }
 
     const renderForm = () => {
+        console.log('is Admin', parametro.isAdmin)
         return (
         <form>
             <div className="relative z-0 mb-6 w-full group">
@@ -44,7 +45,7 @@ const SingUp = ({ setIsLogin }) => {
                 >
                     <input
                         type="checkbox"
-                        value=""
+                        value={administrador}
                         id="checked-toggle"
                         className="sr-only peer"
                         onChange={() => dispatch(toggleAdministrador())}
