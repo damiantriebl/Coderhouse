@@ -4,7 +4,7 @@ import Home from './Layout/Home'
 import Nav from "./Layout/Nav";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Cart from "./Layout/Cart";
-import RutaProtegida from "./rutaProtegida";
+import RutaProtegida from "./RutaProtegida";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import useRequest from './hooks/useRequest';
