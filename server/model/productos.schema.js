@@ -6,6 +6,7 @@ const ProductosSchema = new Mongoose.Schema({
     productos: String,
     precio: String,
     thumbnail: String,
+    tipo: String,
     dateOfInsert: {
         type: Date,
         default: new Date(),

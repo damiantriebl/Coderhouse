@@ -17,10 +17,11 @@ class productosDaoMongo {
   }
   async getById(id) {
     try {
-      let getById = await this.db.find({ id: _id });
-      return { success: true, data: getById,  error: error.message };;
+      console.log('dtcon id', id)
+      let getById = await this.db.findOne({id});
+      return { success: true, data: getById };;
     } catch (error) {
-      return { error: error.message };
+      return { success: false, data: null , error: error.message };
     }
   }
  
@@ -28,6 +29,14 @@ class productosDaoMongo {
     try {
       let getall = await this.db.find({});
       return { success: true, data: getall };;
+    } catch (error) {
+      return { success: false ,error: error.message };
+    }
+  }
+  async getForType(tipo) {
+    try {
+      let getForType = await this.db.find({tipo});
+      return { success: true, data: getForType };;
     } catch (error) {
       return { success: false ,error: error.message };
     }

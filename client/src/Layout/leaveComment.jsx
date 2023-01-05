@@ -56,13 +56,13 @@ const LeaveComment = () => {
               required
             />
           </div>
-          <div class="flex items-center mb-4">
-            <input checked={tipo === "Usuario"} id="default-radio-1" onClick={(e) => setTipo("Usuario")}  type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-              <label for="default-radio-1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Usuario</label>
+          <div className="flex items-center mb-4">
+            <input defaultChecked={tipo === "Usuario"} id="default-radio-1" onClick={(e) => setTipo("Usuario")}  type="radio" value="" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+              <label htmlFor="default-radio-1" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Usuario</label>
           </div>
-          <div class="flex items-center">
-            <input checked={tipo === "Sistema"} id="default-radio-2" onClick={(e) => setTipo("Sistema")} type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-              <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sistema</label>
+          <div className="flex items-center">
+            <input defaultChecked={tipo === "Sistema"} id="default-radio-2" onClick={(e) => setTipo("Sistema")} type="radio" value="" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+              <label htmlFor="default-radio-2" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sistema</label>
           </div>
           <div className="sm:col-span-2">
             <label

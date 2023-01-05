@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   carrito: [],
   openDrawnerCarro: false,
-  productos: []
+  productos: [],
+  ordenes: []
 }
 
 export const cartSlice = createSlice({
@@ -30,11 +31,14 @@ export const cartSlice = createSlice({
     },
     deleteElementCart: (state, action) => {
       state.carrito = state.carrito.filter(item => +item.idProducto !== +action.payload)
-    }    
+    },    
+    deleteCart: (state, action) => {
+      state.carrito = []
+    }   
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCart ,deleteElementCart, toggleDrawnerCarro, initCart, addProductos} = cartSlice.actions
+export const { addCart ,deleteElementCart, toggleDrawnerCarro, initCart, addProductos, deleteCart} = cartSlice.actions
 
 export default cartSlice.reducer

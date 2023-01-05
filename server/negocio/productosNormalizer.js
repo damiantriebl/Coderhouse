@@ -32,5 +32,23 @@ class productosNormalizer {
           return {message: "no se encontro productos", success: false}
         }   
   }
+  async cargarPorTipo(tipo) {  
+    const productos =  await new productosDaoMongo().getForType(tipo)
+    console.log('productos!', productos)
+    if(productos.data?.length > 0){
+        return {message: "Productos encontrados", data: productos.data, success: true}      
+    }else {
+      return {message: "no se encontro productos", success: false}
+    }   
+  }
+  async cargarPorId(id) {  
+    const productos =  await new productosDaoMongo().getById(id)
+    console.log('productos!', productos)
+    if(productos?.data){
+        return {message: "Productos encontrados", data: productos.data, success: true}      
+    }else {
+      return {message: "no se encontro productos", success: false}
+    }   
+  }
 }
 export default productosNormalizer;

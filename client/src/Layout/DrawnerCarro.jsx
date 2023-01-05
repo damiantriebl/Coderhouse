@@ -3,26 +3,46 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDrawner } from "../redux/EditorSlice";
 import { useEffect } from 'react';
+import { deleteCart } from "../redux/carroSlice";
+import useRequest from '../hooks/useRequest';
 
 const DrawnerCarro = () => {
   const carrito = useSelector((state) => state.carro.carrito);
+  const usuario = useSelector((state) => state.administrador);
 
-  
-  if(!carrito){ return <h1>Cargando...</h1>} 
+  const { doSend, errors } = useRequest({
+    url: "/api/ordenes",
+    method: "post",
+    body: { orden: carrito, usuario  },
+    onSuccess: (usr) => {        
+            dispatch(deleteCart())        
+    }
+}); 
+  const handleBuy = ()=>{
+    doSend();
+    console.log('dtcon carro', carrito)
+  }
+
+  if (!carrito) { return <h1>Cargando...</h1> }
   return (
-    <div id="drawer-example" className="absolute z-40 h-full right-0 p-4 mt-40 overflow-y-auto bg-white w-96" tabIndex="-1" aria-labelledby="drawer-right-label">
-        <h5 id="drawer-label" className="inline-flex items-center mb-4 text-lg mb-12 font-semibold text-gray-500 dark:text-gray-400">
-       <img src={carro} className="w-10 mr-4" /> Carro de Compras</h5>
-       {carrito.length &&
-        carrito.map((obj)=>{
-          console.log('Carro', obj );
-          return(
+    <div id="drawer-carro" className="flex flex-col absolute z-40 h-full right-0 p-4 mt-40 overflow-y-auto bg-white w-96" tabIndex="-1" aria-labelledby="drawer-right-label">
+      <h5 id="drawer-label" className="inline-flex items-center mb-4 text-lg mb-12 font-semibold text-gray-500 dark:text-gray-400">
+        <img src={carro} className="w-10 mr-4" /> Carro de Compras</h5>
+      {carrito.length &&
+        carrito.map((obj) => {
+          console.log('Carro', obj);
+          return (
             <li>{obj.producto} - {obj.precio}</li>
           )
         })
-       }
-       
-</div>
+      }
+      <button
+        className=" mt-10 text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
+        onClick={handleBuy}
+      >
+        Comprar
+      </button>
+    </div>
   );
 };
 

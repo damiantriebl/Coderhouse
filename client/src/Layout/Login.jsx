@@ -26,7 +26,7 @@ const Login = ({setIsLogin}) => {
             if (usr) {
                 setUser(usr.user)
                 dispatch(setCredentials(usr))
-                navigate("/productos");
+                navigate("/");
 
             } else {
                 dispatch(setError(usr.message))

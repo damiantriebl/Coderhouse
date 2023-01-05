@@ -10,8 +10,8 @@ import { useEffect } from "react";
 import useRequest from './hooks/useRequest';
 
 function App() {
-  const home = (useLocation().pathname === '/');
-  const user = useSelector((state) => state.administrador.user);
+  const home = (useLocation().pathname === '/login');
+  const user = useSelector((state) => state.administrador);
 
 
   return (
@@ -19,9 +19,9 @@ function App() {
       <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50">
         <Nav home />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/productos" element={<Products />} />
-          <Route path="carrito/:email" element={<RutaProtegida user={user}><Cart /></RutaProtegida>} />
+          <Route path="/" element={<RutaProtegida user={user}><Products /></RutaProtegida>} />
+          <Route path="/login" element={<Home />} />
+          <Route path="carrito/" element={<RutaProtegida user={user}><Cart /></RutaProtegida>} />
         </Routes>
       </div>
       <Comments home className={home && "hidden "} />

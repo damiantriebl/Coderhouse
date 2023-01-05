@@ -58,14 +58,14 @@ const Nav = ({ home }) => {
         <div className="container flex flex-wrap justify-between items-center mx-auto">
           <img src={logo} className="w-16 h-16 " alt="Adidas" />
           <h1 className="mx-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r  from-sky-600 to-blue-500">
-            Adidas 2022
+            Adidas 2023
           </h1>
           {location.pathname === "/productos" && <>
             <button
               className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
               onClick={handleCarro}
             >
-              Ver Carro
+              {!openDrawnerCarro ? <p>Ver Carro</p> : <p>Cerrar Carro</p>}
             </button>
             {administrador?.isAdmin &&
               <>
@@ -77,7 +77,7 @@ const Nav = ({ home }) => {
                 </button>
               </>}
                 <button
-                  className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
+                  className=" text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
                   onClick={handleDesloguear}
                 >
                   Desloguearse

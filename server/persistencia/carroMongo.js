@@ -2,7 +2,7 @@ import { connect } from "../config/mongoConfig.js";
 
 class CarroDaoMongo {
   constructor(db) {
-    this.db = connect().CarroModel;
+    this.db = connect().carroModel;
   }
   async save(carro) {
     try {

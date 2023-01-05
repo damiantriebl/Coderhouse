@@ -9,12 +9,13 @@ import bcrypt from "bcryptjs";
 import { UserRouter } from "./routes/User.Routes.js";
 import { ProductosRouter } from "./routes/Productos.Routes.js";
 import { CarritoRouter } from "./routes/Carro.Router.js";
-import { emailRouter} from './routes/email.Router.js'
+import { EmailRouter} from './routes/email.Router.js'
 import * as dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import {Server} from 'socket.io'
 import http from 'http';
 import comentariosNormalizer from "./negocio/comentariosNormalizer.js";
+import { OrdenesRouter } from "./routes/Ordenes.Router.js";
 
 dotenv.config();
 
@@ -38,7 +39,8 @@ app.use(passport.session());
 app.use(UserRouter);
 app.use(ProductosRouter);
 app.use(CarritoRouter);
-app.use(emailRouter);
+app.use(EmailRouter);
+app.use(OrdenesRouter)
 passport.use(
   new LocalStrategy(
     {

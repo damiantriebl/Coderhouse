@@ -14,4 +14,4 @@ router.get("/api/email", async (req, res) => {
   const mail = await transporter.sendMail(data);
   res.send(mail);
 });
-export {router as emailRouter}
+export {router as EmailRouter}
