@@ -3,6 +3,8 @@ import useRequest from '../hooks/useRequest';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleDrawner } from "../redux/EditorSlice";
+import { setError } from '../redux/ErrorSlice';
+import { editProductos } from '../redux/carroSlice';
 
 const DrawnerForm = () => {
     const editorDrawner = useSelector((state) => state.editor.body);
@@ -11,27 +13,26 @@ const DrawnerForm = () => {
     const [thumbnail, setThumbnail] = useState(editorDrawner.thumbnail || "");
     const id = editorDrawner.id || null;
     const editor = editorDrawner.edit || null;
+    const dispatch = useDispatch();
 
-    const dispatch = useDispatch()    
-  /*   const {doRequest} = useSocket({
-      room: 'producto',
-      body: {
-        producto,
-        precio,
-        thumbnail
-      },  
-    }); */
+
     const {doSend, errors} = useRequest({
       url: "/api/productos/" + id,
       method: "put",
       body: {id, producto, precio, thumbnail},
-      onSuccess: () => dispatch(toggleDrawner())
+      onSuccess: (obj) => {
+        if(obj?.success){
+          dispatch(editProductos(obj.data))
+          dispatch(toggleDrawner())
+        }else{
+          console.log('salto el error')
+          dispatch(setError(obj.error))
+        }
+      } 
     });
     const handlerSubmit = () => {
       if(editor){
         doSend()
-      }else{
-        doRequest();
       }
     }
   return (

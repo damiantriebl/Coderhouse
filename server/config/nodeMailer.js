@@ -1,12 +1,22 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
+/* const transporter = nodemailer.createTransport({
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     auth: {
-        user: 'ismael.okuneva@ethereal.email',
-        pass: 'RRpkdYADuR6KtckbaY'
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
     }
 });
 
+export default transporter */
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    auth: {
+        user: "damiantriebl@gmail.com",
+        pass: "svrqlzzrmsryytih"
+    }
+});
 export default transporter

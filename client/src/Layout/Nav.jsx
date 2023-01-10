@@ -24,7 +24,7 @@ const Nav = ({ home }) => {
     onSuccess: () => { 
       dispatch(logOut());
       setUsuario(null)
-      navigate("/");
+      navigate("/login");
     }
   });
 
@@ -60,7 +60,7 @@ const Nav = ({ home }) => {
           <h1 className="mx-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r  from-sky-600 to-blue-500">
             Adidas 2023
           </h1>
-          {location.pathname === "/productos" && <>
+          {location.pathname === "/" && <>
             <button
               className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none "
               onClick={handleCarro}

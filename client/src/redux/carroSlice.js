@@ -16,7 +16,7 @@ export const cartSlice = createSlice({
     },
     editProductos: (state , action) => {
       const elemento = action.payload;
-      const idx =state.productos.findIndex(elemento);
+      const idx = state.productos.findIndex(obj => obj.id === elemento.id);
       state.productos[idx] = action.payload;
     },
     toggleDrawnerCarro: (state) => {     
@@ -34,11 +34,14 @@ export const cartSlice = createSlice({
     },    
     deleteCart: (state, action) => {
       state.carrito = []
-    }   
+    },
+    addOrdenes: (state , action) => {
+      state.ordenes =  [...action.payload]
+    }, 
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addCart ,deleteElementCart, toggleDrawnerCarro, initCart, addProductos, deleteCart} = cartSlice.actions
+export const { addCart, editProductos ,deleteElementCart, toggleDrawnerCarro, initCart, addProductos, deleteCart, addOrdenes} = cartSlice.actions
 
 export default cartSlice.reducer

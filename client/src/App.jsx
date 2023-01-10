@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RutaProtegida user={user}><Products /></RutaProtegida>} />
           <Route path="/login" element={<Home />} />
-          <Route path="carrito/" element={<RutaProtegida user={user}><Cart /></RutaProtegida>} />
+          <Route path="/ordenes" element={<RutaProtegida user={user}><Cart /></RutaProtegida>} />
         </Routes>
       </div>
       <Comments home className={home && "hidden "} />

@@ -1,6 +1,6 @@
 import * as Mongoose from 'mongoose';
 import * as dotenv from 'dotenv'
-import {usuarioModel, productosModel, carroModel, comentariosModel, ordenesModel} from '../model/all.model.js';
+import {usuarioModel, productosModel, carroModel, comentariosModel, ordenesModel, chatModel} from '../model/all.model.js';
 dotenv.config()
 
 let database;
@@ -15,7 +15,10 @@ export const connect = () => {
     }
     // In order to fix all the deprecation warnings, 
     // below are needed while connecting
-    Mongoose.connect(url);
+    Mongoose.connect(url,  (err) => {
+        if (err) throw err;
+        console.log("mongodb conectado");
+      });
   
     database = Mongoose.connection;
   
@@ -25,7 +28,8 @@ export const connect = () => {
         productosModel,
         carroModel,
         comentariosModel,
-        ordenesModel
+        ordenesModel,
+        chatModel
     };
 };
   

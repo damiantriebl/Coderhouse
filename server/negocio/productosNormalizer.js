@@ -4,12 +4,12 @@ class productosNormalizer {
   constructor() {}
   async guardarProducto(obj, user) {
     if (
-      obj.productos &&
+      obj.producto &&
       obj.precio &&
       obj.thumbnail
     ) {
       const producto = {
-        productos: obj.productos,
+        producto: obj.producto,
         precio: obj.precio,
         thumbnail: obj.thumbnail,  
               
@@ -46,6 +46,15 @@ class productosNormalizer {
     console.log('productos!', productos)
     if(productos?.data){
         return {message: "Productos encontrados", data: productos.data, success: true}      
+    }else {
+      return {message: "no se encontro productos", success: false}
+    }   
+  }
+  async editarPorId(id, producto) {  
+    const productos =  await new productosDaoMongo().updateById(id,producto)
+    console.log('productos!', productos)
+    if(productos){
+        return {message: "Productos encontrados", data: productos, success: true}      
     }else {
       return {message: "no se encontro productos", success: false}
     }   

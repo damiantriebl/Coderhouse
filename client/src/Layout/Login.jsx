@@ -13,9 +13,10 @@ const Login = ({setIsLogin}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(()=>{
-        console.log(user);
+        console.log('usuario:' , user);
        if( user ){
             dispatch(setCredentials(user))
+            navigate("/");
        }
     },[])
     const { doSend, errors } = useRequest({

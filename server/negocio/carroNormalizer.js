@@ -16,8 +16,8 @@ class carroNormalizer {
         error: todoElCarro.error,
       };
     }
-   
-  }
+  
+  } 
   async guardarcarro(usuario, obj) {
     const carro = {
       idUser: usuario,

@@ -21,7 +21,7 @@ class userNormalizer {
         telefono: obj.telefono,
         nombre: obj.nombre,
         avatar: obj.avatar,
-        isAdmin: obj.isAdmin,
+        isAdmin: obj.isAdmin ?? true,
         fechaAlta: Date.now(),
       };
       const salvado = await new usuariosDaoMongo().save(usuario)

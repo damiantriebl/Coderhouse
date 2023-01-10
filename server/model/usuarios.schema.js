@@ -4,6 +4,7 @@ const UsuarioSchema = new Mongoose.Schema({
     email: String,
     password: String,
     edad: Number,
+    nombre: String,
     direccion: String,
     telefono: String,
     avatar: String,

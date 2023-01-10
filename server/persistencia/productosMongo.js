@@ -41,26 +41,25 @@ class productosDaoMongo {
       return { success: false ,error: error.message };
     }
   }
-  /*  async updateById(id, obj) {
+  async updateById(id, obj) {
         try{
-            if(obj.email && obj.password && obj.edad && obj.direccion && obj.telefono){
-                let carritos =  await this.db.findOneAndUpdate(
-                    {_id: id},
+            if(obj.producto && obj.precio && obj.thumbnail){
+                let producto =  await this.db.findOneAndUpdate(
+                    {"id": id},
                     {
-                    producto: obj.producto,
-                    precio: obj.precio,
-                    thumbnail: obj.thumbnail
+                    "producto": obj.producto,
+                    "precio": obj.precio,
+                    "thumbnail": obj.thumbnail
                 });
-                carritos.save();
-                return carritos
+                return producto
             }else{
-                return {error: "no tiene elementos"}
+                return {error: "no tiene ese producto"}
             }
         }catch(error){
-            console.warm('hay un error ', error)
+            console.log('hay un error ', error)
             return {error: error.message}
         }
-    } */
+    }
   async deleteById(id) {
     try {
       let deleteId = await this.db.deleteOne({ _id: id });

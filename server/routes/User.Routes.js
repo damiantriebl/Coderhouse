@@ -3,7 +3,8 @@ import userNormalizer from '../negocio/userNormalizer.js';
 import multer from 'multer';
 import storage from '../config/multerConfig.js';
 import jwt from 'jsonwebtoken'
-import nodemailer from 'nodemailer'
+import transporter from "../config/nodeMailer.js";
+
 const router = express.Router();
 
 const PRIVATE_KEY = 'SECRETO'
@@ -25,30 +26,25 @@ router.get('/api/logout',  async (req, res, next) => {
 
 router.post('/api/signup',upload.single("file"), async (req, res, next) => {
     const data = {...req.body, avatar: req.file.filename}
-    const respuesta = await new userNormalizer().guardarUsuario(data);
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: 'xzavier5@ethereal.email',
-            pass: 'wDSTAuz9GG1Zxvb28a'
-        }}
-    )
+    const res2 = await new userNormalizer().guardarUsuario(data);  
+    const respuesta = res2.data;
+    const html= `<ul>
+                    <li>nombre: ${respuesta?.nombre}</li>
+                    <li>Email: ${respuesta?.email}</li>
+                    <li>Edad: ${respuesta?.edad}</li>
+                    <li>direccion: ${respuesta?.direccion}</li>
+                    <li>telefono: ${respuesta?.telefono}</li>
+            </ul>`
     const email = {
-        from: "adidas 2022",
+        from: "Adidas 2022", // sender address,
         to: "damiantriebl@gmail.com",
         subject: "Un nuevo usuario se a registrado",
-        text: `se a registrado una persona con estos datos`
-    }
-    transporter.sendMail(email, (error, info)=>{
-        if(error){
-            res.status(500).send(error.message)
-        }
-        console.log('main info', info)
-        
-    })
-    console.log(respuesta);
-    res.json(respuesta)   
+        html: `<body><h1>se a registrado una persona:</h1><br/>${html}</body>`,
+    };
+      const mail = await transporter.sendMail(email);
+  
+    console.log(res2);
+    res.json(res2)   
 })
 
 export {router as UserRouter}

@@ -6,21 +6,27 @@ import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
 
 const SingUp = ({ setIsLogin }) => {
-    const [parametro, setparametro] = useState({ email: '', password: '', nombre: '', edad: '', direccion: '' });
+    const [parametro, setparametro] = useState({ email: '',RepeatPassword: '', password: '', nombre: '', edad: 0, direccion: '', telefono:0 });
     const [files, setFiles] = useState([]);
     const administrador = useSelector((state) => state.administrador.value);
     const [valido, setValido] = useState(false)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const onSubmit = async (e) => {
-        const formData = new FormData();
-        formData.append('file', files)
-        formData.append("email", parametro.email)
-        formData.append("password", parametro.password)
-        formData.append("nombre", parametro.nombre)
-        formData.append("edad", parametro.edad)
-        formData.append("direccion", parametro.direccion)
-        formData.append("isAdmin", administrador)
+        if(RepeatPassword === password){
+            const formData = new FormData();
+            formData.append('file', files)
+            formData.append("email", parametro.email)
+            formData.append("password", parametro.password)
+            formData.append("nombre", parametro.nombre)
+            formData.append("edad", parametro.edad)
+            formData.append("telefono", parametro.telefono)
+            formData.append("direccion", parametro.direccion)
+            formData.append("isAdmin", administrador ?? true)
+        }else{
+            dispatch(setError("el usuario y el password no son iguales"))
+        }
+
 
         try {
             const res = await axios.post('http://localhost:4000/api/signup', formData);
@@ -29,7 +35,7 @@ const SingUp = ({ setIsLogin }) => {
             if (err.response?.status === 500) {
                 console.log(err);
             } else {
-                console.log('respuesta', err.response.data.msg);
+                dispatch(setError(`Error ${err.response.data.msg}`))
             }
         }
     }
@@ -91,6 +97,22 @@ const SingUp = ({ setIsLogin }) => {
                 <div>
                     <div className="mb-2 block">
                         <Label
+                            htmlFor="RepeatPassword"
+                            value="Repetir Password"
+                        />
+                    </div>
+                    <TextInput
+                        id="RepeatPassword"
+                        type="password"
+                        placeholder="**"
+                        value={parametro.RepeatPassword}
+                        onChange={e => setparametro({ ...parametro, RepeatPassword: e.currentTarget.value })}
+                        required={true}
+                    />
+                </div>
+                <div>
+                    <div className="mb-2 block">
+                        <Label
                             htmlFor="nombre"
                             value="Nombre"
                         />
@@ -133,7 +155,21 @@ const SingUp = ({ setIsLogin }) => {
                         onChange={e => setparametro({ ...parametro, edad: e.currentTarget.value })}
                     />
                 </div>
-
+                <div>
+                    <div className="mb-2 block">
+                        <Label
+                            htmlFor="Telefono"
+                            value="Telefono"
+                        />
+                    </div>
+                    <TextInput
+                        id="Telefono"
+                        type="number"
+                        placeholder="02262 55 55 63 48"
+                        value={parametro.telefono}
+                        onChange={e => setparametro({ ...parametro, telefono: e.currentTarget.value })}
+                    />
+                </div>
                 <div id="fileUpload">
                     <div className="mb-2 block">
                         <Label
@@ -169,7 +205,7 @@ const SingUp = ({ setIsLogin }) => {
             <h1>El usuario se registro correctamente, por favor entre por primera ves</h1>
             <button
                 type="button"
-                onClick={()=>navigate('/login')}
+                onClick={()=>navigate('/')}
                 className="text-white bg-gradient-to-r from-sky-600 to-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
                 El usuario
