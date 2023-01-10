@@ -46,7 +46,6 @@ const chatTooltip = () => {
                     Chat
                 </label>
             </div>
-            {console.log('dtcon Chat', chat?.[0].email)}
             {chat?.[0].listaComentada?.length < 1 && <p className='text-gray-100'>No hay productos</p>}
             { chat?.[0].listaComentada?.map((obj)=>{
                 return <>

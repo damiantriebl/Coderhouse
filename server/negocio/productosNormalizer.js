@@ -14,9 +14,7 @@ class productosNormalizer {
         thumbnail: obj.thumbnail,  
               
       };
-      console.log('dtcon user' ,user)
       const productoGuardado = await new productosDaoMongo().save(producto, user)
-      console.log("salvado", productoGuardado);
       return {message: "se cargo correctamente", success: "err", data: productoGuardado}
 
     }else{
@@ -25,7 +23,6 @@ class productosNormalizer {
   }
   async cargarTodosLosProductos() {  
         const productos =  await new productosDaoMongo().getAll()
-        console.log('productos!', productos)
         if(productos.data?.length > 0){
             return {message: "Productos encontrados", data: productos.data, success: true}      
         }else {
@@ -34,7 +31,6 @@ class productosNormalizer {
   }
   async cargarPorTipo(tipo) {  
     const productos =  await new productosDaoMongo().getForType(tipo)
-    console.log('productos!', productos)
     if(productos.data?.length > 0){
         return {message: "Productos encontrados", data: productos.data, success: true}      
     }else {
@@ -43,7 +39,6 @@ class productosNormalizer {
   }
   async cargarPorId(id) {  
     const productos =  await new productosDaoMongo().getById(id)
-    console.log('productos!', productos)
     if(productos?.data){
         return {message: "Productos encontrados", data: productos.data, success: true}      
     }else {
@@ -52,7 +47,6 @@ class productosNormalizer {
   }
   async editarPorId(id, producto) {  
     const productos =  await new productosDaoMongo().updateById(id,producto)
-    console.log('productos!', productos)
     if(productos){
         return {message: "Productos encontrados", data: productos, success: true}      
     }else {

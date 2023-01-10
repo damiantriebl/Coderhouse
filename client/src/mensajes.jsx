@@ -1,5 +1,4 @@
 const mensajes = ({obj}) =>{
-    console.log(obj)
     return (
         <div style={{display:'flex'}}>
             <img style={{width: "30px", height: '30px', margin:'1rem'}} src={obj.author.avatar} />

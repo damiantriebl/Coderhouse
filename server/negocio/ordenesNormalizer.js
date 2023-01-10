@@ -25,7 +25,6 @@ class OrdenesNormalizer {
       usuario: orden.usuario,
       orden: orden.orden  
     };
-    console.log ('datos del orden', ordenNormalizado)
     const carroGuardado = await new getOrdenDao().save(ordenNormalizado);
     return {
       message: "se cargo correctamente",
@@ -36,7 +35,6 @@ class OrdenesNormalizer {
 
   async cargarTodasLosOrde() {
     const ordenes = await new getOrdenDao().getAll();
-    console.log("ordenes!", ordenes);
     if (ordenes.data?.length > 0) {
       return {
         message: "ordenes encontrados",

@@ -134,9 +134,9 @@ io.on("connection", async (socket) => {
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(4000, () => {
+app.listen(PORT, () => {
   console.log("Se esta escuchando", PORT);
 });
-server.listen(4001, () => {
+server.listen(process.env.WEBSOCKET_PORT, () => {
   console.log(`server de websocket escuchando en el ${4001}`);
 });

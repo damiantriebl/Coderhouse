@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest --watchAll --no-cache",
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "jest": {
     "preset": "ts-jest",

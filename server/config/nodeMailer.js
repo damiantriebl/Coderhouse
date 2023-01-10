@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-/* const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
     auth: {
@@ -9,14 +9,4 @@ import nodemailer from 'nodemailer';
     }
 });
 
-export default transporter */
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    auth: {
-        user: "damiantriebl@gmail.com",
-        pass: "svrqlzzrmsryytih"
-    }
-});
-export default transporter
+export default transporter 

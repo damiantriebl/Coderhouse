@@ -14,6 +14,5 @@ it('cuando se hace un singUp, tiene que quedar en la base de datos guardada',asy
         fechaAlta: Date.now(),
     }
        const respuesta = await new userNormalizer().guardarUsuario(usuarioMock);
-        console.log('respuesta')
     }
 )

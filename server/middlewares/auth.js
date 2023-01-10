@@ -10,7 +10,6 @@ const auth = (req, res, next) => {
             res.status(401).json({error: 'Usuario no autorizado'})
         }
         req.user = decoded.data
-        console.log(decoded)
         next()
     })
     next()

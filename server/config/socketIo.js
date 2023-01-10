@@ -20,7 +20,6 @@ io.on('connection', async (socket) =>{
     socket.on('producto', async (data) => {    
         await productos.save({producto: data.body.producto, precio: data.body.precio, thumbnail: data.body.thumbnail});
         const listaProductos = await comentarios.getAll() 
-        console.log(listaComentarios)
         io.sockets.emit('productos', listaProductos)
     })
     socket.on('message', async (data) => {    

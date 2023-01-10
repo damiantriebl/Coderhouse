@@ -43,7 +43,6 @@ router.post('/api/signup',upload.single("file"), async (req, res, next) => {
     };
       const mail = await transporter.sendMail(email);
   
-    console.log(res2);
     res.json(res2)   
 })
 

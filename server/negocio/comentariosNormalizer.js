@@ -15,9 +15,7 @@ class comentariosNormalizer {
         comentario: obj.comentario,
         tipo: obj.tipo
       };
-      console.log('dtcon user' ,comentario)
       const comentarioGuardado = await new comentarioDaoMongo().save(comentario)
-      console.log("salvado", comentarioGuardado);
       return {message: "se cargo correctamente", success: "err", data: comentarioGuardado}
 
     }else{

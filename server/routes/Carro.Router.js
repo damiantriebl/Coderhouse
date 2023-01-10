@@ -27,8 +27,6 @@ router.get('/api/carro/:id', async (req, res)=> {
 })
 
 router.post('/api/carro/:id/', async (req, res) => {
-    console.log(req.params)
-    console.log(req.body)
     const productoCarro = await  new carroNormalizer().guardarcarro(req.params.id, req.body);
     if (!productoCarro?.error){
         res.json({

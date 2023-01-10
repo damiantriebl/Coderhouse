@@ -30,7 +30,6 @@ router.put("/api/productos/:id", async (req, res) => {
 });
 
 router.delete("/api/productos/:id", async (req, res) => {
-  console.log("se borra");
   const productoBorrado = await objProducto.deleteById(req.params.id);
   if (!productoBorrado?.error) {
     res.json({

@@ -1,4 +1,4 @@
-import carroMongo from '../persistencia/carroMongo.js';
+import carroMongo from '../persistencia/productosMongo.js';
 
 import { PERSISTENCIA_PRODUCTOS, RUTA_PRODUCTOS } from '../config.js'
 

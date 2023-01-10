@@ -6,7 +6,6 @@ class productosDaoMongo {
   }
   async save(producto) {
     try {
-      console.log('dtcon produ', producto)
       let productoObj = await this.db.create(producto);
       productoObj.save();
       return productoObj;
@@ -17,7 +16,6 @@ class productosDaoMongo {
   }
   async getById(id) {
     try {
-      console.log('dtcon id', id)
       let getById = await this.db.findOne({id});
       return { success: true, data: getById };;
     } catch (error) {
@@ -56,7 +54,6 @@ class productosDaoMongo {
                 return {error: "no tiene ese producto"}
             }
         }catch(error){
-            console.log('hay un error ', error)
             return {error: error.message}
         }
     }

@@ -35,10 +35,7 @@ class userNormalizer {
       email &&
       password  
     ) {
-        const user =  await new usuariosDaoMongo().getByEmail(email)
-        console.log('email', email, 'password', password)
-        console.log('password db', user)
-
+        const user =  await new usuariosDaoMongo().getByEmail(email)  
         if(user?.password){
             let checkPass = await bcrypt.compare(password, user.password);
             if(checkPass){
@@ -47,7 +44,6 @@ class userNormalizer {
                 return {message: "el mail o la contraseña es incorrecta", success: false}
             }
         }else {
-            console.log('le erraste feo')
             return {message: "no se encontro el mail", success: false}
 
         }

@@ -5,7 +5,6 @@ import transporter from "../config/nodeMailer.js";
 const router = express.Router();
 
 router.get("/api/ordenes/:id", async (req, res) => {
-    console.log("dtcon ordenes", req.params);
      const ordenes = await new OrdenesNormalizer().getAll(req.params.id);
     if (!ordenes?.error) {
         res.json({

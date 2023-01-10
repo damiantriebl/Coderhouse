@@ -6,7 +6,6 @@ class OrdenDaoMongo {
   }
   async save(orden) {
     try {
-      console.log(orden)
       let ordenObj = await this.db.create(orden);    
       ordenObj.save();
       return ordenObj;
