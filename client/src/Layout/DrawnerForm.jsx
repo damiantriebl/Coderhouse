@@ -15,7 +15,6 @@ const DrawnerForm = () => {
     const editor = editorDrawner.edit || null;
     const dispatch = useDispatch();
 
-
     const {doSend, errors} = useRequest({
       url: "/api/productos/" + id,
       method: "put",
@@ -30,9 +29,25 @@ const DrawnerForm = () => {
         }
       } 
     });
+    const {doSend: doCreate, errors:errorCreate} = useRequest({
+      url: "/api/productos/",
+      method: "post",
+      body: {id, producto, precio, thumbnail},
+      onSuccess: (obj) => {
+        if(obj?.success){
+          dispatch(editProductos(obj.data))
+          dispatch(toggleDrawner())
+        }else{
+          console.log('salto el error')
+          dispatch(setError(obj.error))
+        }
+      } 
+    });
     const handlerSubmit = () => {
       if(editor){
         doSend()
+      }else{
+        doCreate()
       }
     }
   return (
